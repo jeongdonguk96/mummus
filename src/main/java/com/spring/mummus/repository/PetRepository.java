@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long> {
-    Boolean existsPet(String name, Long memberId);
+    Boolean existsByNameAndMemberId(String name, Long memberId);
 }

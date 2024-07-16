@@ -13,7 +13,7 @@ public class PetReference {
     private final PetRepository petRepository;
 
     public void checkDuplicatedPet(String petName, Long memberId) {
-        if (petRepository.existsPet(petName, memberId)) {
+        if (petRepository.existsByNameAndMemberId(petName, memberId)) {
             throw new PetException(DUPLICATED_PET);
         }
     }
