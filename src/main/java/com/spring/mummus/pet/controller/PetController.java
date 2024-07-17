@@ -1,8 +1,8 @@
-package com.spring.mummus.controller;
+package com.spring.mummus.pet.controller;
 
-import com.spring.mummus.domain.dto.pet.RegisterPetDto;
-import com.spring.mummus.domain.entity.Pet;
-import com.spring.mummus.service.PetService;
+import com.spring.mummus.pet.domain.dto.RegisterPetRequest;
+import com.spring.mummus.pet.domain.entity.Pet;
+import com.spring.mummus.pet.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class PetController {
     private final PetService petService;
 
     @PostMapping("/register")
-    public ResponseEntity<Pet> register(@RequestBody RegisterPetDto registerPetDto) {
-        return ResponseEntity.ok(petService.registerPet(registerPetDto));
+    public ResponseEntity<Pet> register(@RequestBody RegisterPetRequest registerPetRequest) {
+        return ResponseEntity.ok(petService.registerPet(registerPetRequest));
     }
 }

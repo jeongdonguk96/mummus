@@ -1,12 +1,9 @@
-package com.spring.mummus.domain.entity;
+package com.spring.mummus.pet.domain.entity;
 
 
-import com.spring.mummus.domain.type.Gender;
-import com.spring.mummus.domain.type.PetType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.spring.mummus.pet.domain.type.Gender;
+import com.spring.mummus.pet.domain.type.PetType;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -20,7 +17,9 @@ public class Pet {
     private Long id;
     private String name;
     private Integer age;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
     private PetType petType; // 견종
     private Long memberId;
 }

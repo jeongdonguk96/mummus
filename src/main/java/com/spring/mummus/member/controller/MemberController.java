@@ -1,7 +1,7 @@
-package com.spring.mummus.controller;
+package com.spring.mummus.member.controller;
 
-import com.spring.mummus.domain.dto.member.MemberSignUpDto;
-import com.spring.mummus.service.MemberService;
+import com.spring.mummus.member.domain.dto.MemberSignUpRequest;
+import com.spring.mummus.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +15,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public void signUp (@RequestBody MemberSignUpDto memberSignUpDto) {
-        memberService.signUp(memberSignUpDto);
+    public void signUp (@RequestBody MemberSignUpRequest memberSignUpRequest) {
+        memberService.signUp(memberSignUpRequest);
     }
 }

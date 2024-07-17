@@ -1,4 +1,4 @@
-package com.spring.mummus.domain.entity;
+package com.spring.mummus.member.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
