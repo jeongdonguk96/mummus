@@ -20,4 +20,5 @@ public class PetService {
 
         return petRepository.save(registerPetRequest.toEntity());
     }
+
 }

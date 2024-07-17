@@ -12,9 +12,9 @@ spring:
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url:
-    username:
-    password:
+    url: jdbc:mariadb://localhost:65001/mummus?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: mummus
+    password: 1234
     minimum-idle: 10
     maximum-pool-size: 10
 

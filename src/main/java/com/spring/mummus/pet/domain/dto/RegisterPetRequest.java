@@ -3,14 +3,13 @@ package com.spring.mummus.pet.domain.dto;
 import com.spring.mummus.pet.domain.entity.Pet;
 import com.spring.mummus.pet.domain.type.Gender;
 import com.spring.mummus.pet.domain.type.PetType;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterPetRequest {
     private String name;
     private Integer age;

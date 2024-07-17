@@ -1,14 +1,13 @@
 package com.spring.mummus.member.domain.dto;
 
 import com.spring.mummus.member.domain.entity.Member;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberSignUpRequest {
     private String email;
     private String password;
