@@ -1,7 +1,8 @@
-package com.spring.mummus.service.reference;
+package com.spring.mummus.pet.service.reference;
 
 import com.spring.mummus.exception.exception.PetException;
-import com.spring.mummus.repository.PetRepository;
+import com.spring.mummus.pet.domain.dto.RegisterPetRequest;
+import com.spring.mummus.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,8 @@ import static com.spring.mummus.exception.enums.PetErrorCode.DUPLICATED_PET;
 public class PetReference {
     private final PetRepository petRepository;
 
-    public void checkDuplicatedPet(String petName, Long memberId) {
-        if (petRepository.existsByNameAndMemberId(petName, memberId)) {
+    public void checkDuplicatedPet(RegisterPetRequest registerPetRequest) {
+        if (petRepository.existsByNameAndMemberId(registerPetRequest.getName(), registerPetRequest.getMemberId())) {
             throw new PetException(DUPLICATED_PET);
         }
     }
