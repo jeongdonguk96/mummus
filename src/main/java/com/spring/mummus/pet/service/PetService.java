@@ -6,6 +6,7 @@ import com.spring.mummus.pet.service.reference.PetReference;
 import com.spring.mummus.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +14,7 @@ public class PetService {
     private final PetReference petReference;
     private final PetRepository petRepository;
 
+    @Transactional
     public Pet registerPet(RegisterPetRequest registerPetRequest) {
         petReference.checkDuplicatedPet(registerPetRequest);
 
