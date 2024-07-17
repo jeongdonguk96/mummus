@@ -1,10 +1,10 @@
-package com.spring.mummus.domain.type;
+package com.spring.mummus.pet.domain.type;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum PetType {
     POODLE("푸들"),
     MALTESE("말티즈"),
