@@ -1,8 +1,8 @@
-package com.spring.mummus.service.reference;
+package com.spring.mummus.member.service.reference;
 
-import com.spring.mummus.domain.entity.Member;
+import com.spring.mummus.member.domain.entity.Member;
 import com.spring.mummus.exception.exception.MemberException;
-import com.spring.mummus.repository.MemberRepository;
+import com.spring.mummus.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
