@@ -30,7 +30,6 @@
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
-/src/main/resources/application.yml
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
@@ -193,5 +192,8 @@ gradle-app.setting
 ### Gradle Patch ###
 # Java heap dump
 *.hprof
+
+# yml 파일
+*.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,intellij,java,gradle

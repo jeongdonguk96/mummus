@@ -1,17 +1,13 @@
 <b>
-✨ feat: add new feature <br>
-🐛 fix: fix a bug <br>
-📝 docs: update documentation <br>
-💄 style: update the UI and style files <br>
-♻️ refactor: code refactoring <br>
-🚀 perf: improve performance <br>
-✅ test: add or update tests <br>
-🔧 chore: changes to build process or auxiliary tools <br>
-📦 build: changes that affect the build system or dependencies <br>
-🔀 merge: merge branches <br>
-⬆️ deps: update dependencies <br>
-⬇️ downgrade: downgrade dependencies <br>
-🚑 hotfix: critical hotfix <br>
-⏪ revert: revert changes <br>
-🚨 lint: fix linter warnings <br>
+✨ Feat: 새로운 기능 추가 또는 기능 업데이트 <br>
+🔨 Fix: 버그 또는 에러 수정 <br>
+⭐ Style: 코드 포맷팅, 코드 오타, 함수명 수정 등 스타일 수정 <br>
+🧠 Refactor: 코드 리팩토링(똑같은 기능인데 코드만 개선) <br>
+📁 File: 파일 이동 또는 제거, 파일명 변경 <br>
+✅ Test: 테스트 코드 추가 또는 코드 수정 <br>
+🎨 Design: 디자인, 문장 수정 <br>
+🏷 Comment: 주석 수정 및 삭제 <br>
+🍎 Chore: 빌드 수정, 패키지 추가, 환경변수 설정 <br>
+📝 Docs: 문서 수정, 블로그 포스트 추가 <br>
+🔥 Hotfix: 핫픽스 수정 <br>
 </b>
