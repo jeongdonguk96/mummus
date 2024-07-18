@@ -1,4 +1,4 @@
-package com.spring.mummus.pet.domain.type;
+package com.spring.mummus.pet.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

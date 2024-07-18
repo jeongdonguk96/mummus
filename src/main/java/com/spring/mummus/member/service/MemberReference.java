@@ -1,4 +1,4 @@
-package com.spring.mummus.member.service.reference;
+package com.spring.mummus.member.service;
 
 import com.spring.mummus.member.domain.entity.Member;
 import com.spring.mummus.exception.exception.MemberException;

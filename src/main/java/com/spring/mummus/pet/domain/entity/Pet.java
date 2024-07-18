@@ -1,8 +1,8 @@
 package com.spring.mummus.pet.domain.entity;
 
 
-import com.spring.mummus.pet.domain.type.Gender;
-import com.spring.mummus.pet.domain.type.PetType;
+import com.spring.mummus.pet.domain.enums.Gender;
+import com.spring.mummus.pet.domain.enums.PetType;
 import jakarta.persistence.*;
 import lombok.*;
 

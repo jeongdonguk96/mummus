@@ -2,7 +2,6 @@ package com.spring.mummus.member.service;
 
 import com.spring.mummus.member.domain.dto.MemberSignUpRequest;
 import com.spring.mummus.member.repository.MemberRepository;
-import com.spring.mummus.member.service.reference.MemberReference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
