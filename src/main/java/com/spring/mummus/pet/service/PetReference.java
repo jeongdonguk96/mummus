@@ -1,4 +1,4 @@
-package com.spring.mummus.pet.service.reference;
+package com.spring.mummus.pet.service;
 
 import com.spring.mummus.exception.exception.PetException;
 import com.spring.mummus.pet.domain.dto.RegisterPetRequest;

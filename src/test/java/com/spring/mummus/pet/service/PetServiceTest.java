@@ -2,8 +2,8 @@ package com.spring.mummus.pet.service;
 
 import com.spring.mummus.pet.domain.dto.RegisterPetRequest;
 import com.spring.mummus.pet.domain.entity.Pet;
-import com.spring.mummus.pet.domain.type.Gender;
-import com.spring.mummus.pet.domain.type.PetType;
+import com.spring.mummus.pet.domain.enums.Gender;
+import com.spring.mummus.pet.domain.enums.PetType;
 import com.spring.mummus.pet.repository.PetRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ class PetServiceTest {
 
 
     @Test
-    @DisplayName("동물 등록이 정상적으로 성공한다")
+    @DisplayName("동물이 정상적으로 등록된다")
     void registerPetTest() {
         // given
         RegisterPetRequest registerPetRequest = new RegisterPetRequest("bona", 5, Gender.GIRL, PetType.JINDO_DOG, 1L);
