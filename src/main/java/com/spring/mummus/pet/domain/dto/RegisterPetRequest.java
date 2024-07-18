@@ -1,8 +1,8 @@
 package com.spring.mummus.pet.domain.dto;
 
 import com.spring.mummus.pet.domain.entity.Pet;
-import com.spring.mummus.pet.domain.type.Gender;
-import com.spring.mummus.pet.domain.type.PetType;
+import com.spring.mummus.pet.domain.enums.Gender;
+import com.spring.mummus.pet.domain.enums.PetType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
