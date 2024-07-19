@@ -15,11 +15,6 @@ public class KakaoOAuth2 implements OAuth2{
     }
 
     @Override
-    public String getProviderId() {
-        return (String) attributes.get("id");
-    }
-
-    @Override
     public String getEmail() {
         return (String) attributes.get("email");
     }

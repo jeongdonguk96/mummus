@@ -23,6 +23,7 @@ public class Member {
     private String name;
     private String address;
     private String phoneNumber;
+    private String provider;
     @Enumerated(EnumType.STRING)
     private Role role;
 }
