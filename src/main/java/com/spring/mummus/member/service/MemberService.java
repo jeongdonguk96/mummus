@@ -1,6 +1,7 @@
 package com.spring.mummus.member.service;
 
 import com.spring.mummus.member.domain.dto.MemberSignUpRequest;
+import com.spring.mummus.member.domain.entity.Member;
 import com.spring.mummus.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,4 +23,15 @@ public class MemberService {
 
         memberRepository.save(memberSignUpRequest.toEntity());
     }
+
+
+    @Transactional
+    public Member singUp(String nickname) {
+        Member newMember = Member.builder()
+                .name(nickname)
+                .build();
+
+        return memberRepository.save(newMember);
+    }
+
 }
