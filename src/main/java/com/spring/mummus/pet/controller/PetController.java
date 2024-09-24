@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/pet")
+@RequestMapping("/pets")
 @RequiredArgsConstructor
 public class PetController {
+
     private final PetService petService;
+
 
     @PostMapping("/register")
     public ResponseEntity<Pet> register(@RequestBody RegisterPetRequest registerPetRequest) {
         return ResponseEntity.ok(petService.registerPet(registerPetRequest));
     }
+
 }

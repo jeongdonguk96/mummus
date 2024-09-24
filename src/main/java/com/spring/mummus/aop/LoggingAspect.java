@@ -1,4 +1,4 @@
-package com.spring.mummus.aop.logging;
+package com.spring.mummus.aop;
 
 import com.spring.mummus.utils.LogUtils;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class AccessAspect {
+public class LoggingAspect {
 
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
     public void restController(){}

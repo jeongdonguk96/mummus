@@ -1,6 +1,7 @@
 package com.spring.mummus.pet.domain.entity;
 
 
+import com.spring.mummus.common.BaseEntity;
 import com.spring.mummus.pet.domain.enums.Gender;
 import com.spring.mummus.pet.domain.enums.PetType;
 import jakarta.persistence.*;
@@ -11,12 +12,12 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class Pet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Pet extends BaseEntity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Integer age;
+    private int age;
+    private String birth;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Enumerated(EnumType.STRING)
