@@ -1,5 +1,6 @@
 package com.spring.mummus.image.domain.entity;
 
+import com.spring.mummus.common.BaseEntity;
 import com.spring.mummus.image.domain.enums.ImageDomain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,7 +19,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Image {
+public class Image extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)

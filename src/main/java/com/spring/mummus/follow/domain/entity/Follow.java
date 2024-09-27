@@ -21,6 +21,6 @@ import lombok.ToString;
 public class Follow extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long followerMemberId;
+    private Long followerPetId;
     private Long followingPetId;
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum PetErrorCode implements ErrorCode {
+    PET_NOT_FOUND(HttpStatus.BAD_REQUEST, 400, "반려견을 찾을 수 없습니다."),
     DUPLICATED_PET(HttpStatus.BAD_REQUEST, 400, "이미 등록한 반려견입니다.")
     ;
 
