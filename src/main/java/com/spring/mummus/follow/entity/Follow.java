@@ -1,4 +1,4 @@
-package com.spring.mummus.follow.domain.entity;
+package com.spring.mummus.follow.entity;
 
 import com.spring.mummus.common.BaseEntity;
 import jakarta.persistence.Entity;

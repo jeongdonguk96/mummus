@@ -1,6 +1,6 @@
 package com.spring.mummus.oauth2.domain;
 
-import com.spring.mummus.member.domain.entity.Member;
+import com.spring.mummus.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;

@@ -1,6 +1,6 @@
 package com.spring.mummus.follow.controller;
 
-import com.spring.mummus.follow.domain.dto.FollowPetRequest;
+import com.spring.mummus.follow.dto.FollowPetRequest;
 import com.spring.mummus.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,27 +25,29 @@ public class FollowController {
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 팔로잉하는 강아지를 조회한다.
-    @GetMapping("/followings")
+    @GetMapping("/following")
     public void getFollowingPets(Long id) {
         followService.getFollowingPets(id);
     }
 
 
+    // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 팔로잉하는 강아지의 수를 조회한다.
-    @GetMapping("/followings/count")
+    @GetMapping("/following/count")
     public void countFollowingPets(Long id) {
         followService.countFollowingPets(id);
     }
 
 
-    // 팔로워 강아지를 조회한다.
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
+    // 팔로워 강아지를 조회한다.
     @GetMapping("/followers")
     public void getFollowerPets(Long id) {
         followService.getFollowerPets(id);
     }
 
 
+    // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 팔로워 강아지의 수를 조회한다.
     @GetMapping("/followers/count")
     public void countFollowerPets(Long id) {

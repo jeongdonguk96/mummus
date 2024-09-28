@@ -1,4 +1,4 @@
-package com.spring.mummus.pet.domain.enums;
+package com.spring.mummus.pet.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Gender {
-    BOY("BOY"),
-    GIRL("GIRL")
+    MALE("MALE"),
+    FEMALE("FEMALE")
     ;
 
-    private final String gender;
+    private final String value;
 }

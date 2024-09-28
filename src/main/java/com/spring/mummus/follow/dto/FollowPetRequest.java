@@ -1,6 +1,6 @@
-package com.spring.mummus.follow.domain.dto;
+package com.spring.mummus.follow.dto;
 
-import com.spring.mummus.follow.domain.entity.Follow;
+import com.spring.mummus.follow.entity.Follow;
 
 public record FollowPetRequest(
         Long followerPetId,

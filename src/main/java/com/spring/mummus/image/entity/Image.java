@@ -1,29 +1,30 @@
-package com.spring.mummus.member.domain.entity;
+package com.spring.mummus.image.entity;
 
 import com.spring.mummus.common.BaseEntity;
-import com.spring.mummus.member.domain.enums.Role;
+import com.spring.mummus.image.enums.ImageDomain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Entity
 @Getter
+@Entity
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
-public class Member extends BaseEntity {
+public class Image extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String password;
-    private String name;
-    private String address;
-    private String phoneNumber;
-    private String provider;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private ImageDomain imageDomain;
+    private Long domainId;
+    private String path;
+    private int order;
 }

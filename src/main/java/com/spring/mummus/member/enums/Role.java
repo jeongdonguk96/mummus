@@ -1,13 +1,13 @@
-package com.spring.mummus.image.domain.enums;
-
+package com.spring.mummus.member.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ImageDomain {
-    PET("PET"),
+public enum Role {
+    ADMIN("ADMIN"),
+    USER("USER"),
     ;
 
     private final String value;

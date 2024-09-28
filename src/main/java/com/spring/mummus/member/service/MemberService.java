@@ -1,8 +1,11 @@
 package com.spring.mummus.member.service;
 
+import com.spring.mummus.exception.enums.MemberErrorCode;
+import com.spring.mummus.exception.enums.PetErrorCode;
 import com.spring.mummus.exception.exception.MemberException;
-import com.spring.mummus.member.domain.dto.MemberSignUpRequest;
-import com.spring.mummus.member.domain.entity.Member;
+import com.spring.mummus.exception.exception.PetException;
+import com.spring.mummus.member.dto.MemberSignUpRequest;
+import com.spring.mummus.member.entity.Member;
 import com.spring.mummus.member.repository.MemberRepository;
 import com.spring.mummus.oauth2.domain.OAuth2;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import static com.spring.mummus.exception.enums.MemberErrorCode.DUPLICATED_PHONE
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+
     private final MemberRepository memberRepository;
 //    private final MemberReference memberReference;
 
@@ -41,16 +45,24 @@ public class MemberService {
         return memberRepository.save(newMember);
     }
 
-    public void checkDuplicatedEmail(String email) {
+
+    private void checkDuplicatedEmail(String email) {
         if (memberRepository.existsByEmail(email)) {
             throw new MemberException(DUPLICATED_EMAIL);
         }
     }
 
-    public void checkDuplicatedPhoneNumber(String phoneNumber) {
+
+    private void checkDuplicatedPhoneNumber(String phoneNumber) {
         if (memberRepository.existsByPhoneNumber(phoneNumber)) {
             throw new MemberException(DUPLICATED_PHONE_NUMBER);
         }
+    }
+
+
+    public Member findMemberById(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(
+                ()-> new MemberException(MemberErrorCode.USER_NOT_FOUND));
     }
 
 }

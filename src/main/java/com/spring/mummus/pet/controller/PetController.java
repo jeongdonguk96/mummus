@@ -1,7 +1,7 @@
 package com.spring.mummus.pet.controller;
 
-import com.spring.mummus.pet.domain.dto.RegisterPetRequest;
-import com.spring.mummus.pet.domain.entity.Pet;
+import com.spring.mummus.pet.dto.RegisterPetRequest;
+import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

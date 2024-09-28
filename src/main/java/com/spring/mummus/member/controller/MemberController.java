@@ -1,6 +1,6 @@
 package com.spring.mummus.member.controller;
 
-import com.spring.mummus.member.domain.dto.MemberSignUpRequest;
+import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

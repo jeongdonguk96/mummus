@@ -1,6 +1,6 @@
-package com.spring.mummus.member.domain.dto;
+package com.spring.mummus.member.dto;
 
-import com.spring.mummus.member.domain.entity.Member;
+import com.spring.mummus.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

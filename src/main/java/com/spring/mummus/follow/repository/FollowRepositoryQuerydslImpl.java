@@ -1,21 +1,22 @@
 package com.spring.mummus.follow.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.spring.mummus.follow.entity.QFollow;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.spring.mummus.follow.domain.entity.QFollow.follow;
+import static com.spring.mummus.follow.entity.QFollow.follow;
 
 @RequiredArgsConstructor
 public class FollowRepositoryQuerydslImpl implements FollowRepositoryQuerydsl {
 
-    private final JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory queryFactory;
 
 
     @Override
     public List<Long> getFollowingPetsId(Long id) {
-        return jpaQueryFactory
+        return queryFactory
                 .select(follow.followingPetId)
                 .from(follow)
                 .where(follow.followerPetId.eq(id))
@@ -25,7 +26,7 @@ public class FollowRepositoryQuerydslImpl implements FollowRepositoryQuerydsl {
 
     @Override
     public List<Long> getFollowerPetsId(Long id) {
-        return jpaQueryFactory
+        return queryFactory
                 .select(follow.followerPetId)
                 .from(follow)
                 .where(follow.followingPetId.eq(id))
@@ -35,7 +36,7 @@ public class FollowRepositoryQuerydslImpl implements FollowRepositoryQuerydsl {
 
     @Override
     public Long countFollowingPets(Long id) {
-        return jpaQueryFactory
+        return queryFactory
                 .select(follow.followingPetId.count())
                 .from(follow)
                 .where(follow.followerPetId.eq(id))
@@ -45,7 +46,7 @@ public class FollowRepositoryQuerydslImpl implements FollowRepositoryQuerydsl {
 
     @Override
     public Long countFollowerPets(Long id) {
-        return jpaQueryFactory
+        return queryFactory
                 .select(follow.followerPetId.count())
                 .from(follow)
                 .where(follow.followingPetId.eq(id))

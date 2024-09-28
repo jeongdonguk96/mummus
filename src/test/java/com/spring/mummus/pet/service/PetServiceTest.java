@@ -1,9 +1,7 @@
 package com.spring.mummus.pet.service;
 
-import com.spring.mummus.pet.domain.dto.RegisterPetRequest;
-import com.spring.mummus.pet.domain.entity.Pet;
-import com.spring.mummus.pet.domain.enums.Gender;
-import com.spring.mummus.pet.domain.enums.PetType;
+import com.spring.mummus.pet.dto.RegisterPetRequest;
+import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.repository.PetRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.spring.mummus.pet.enums.Gender.FEMALE;
+import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -30,7 +30,7 @@ class PetServiceTest {
     @DisplayName("동물이 정상적으로 등록된다")
     void registerPetTest() {
         // given
-        RegisterPetRequest registerPetRequest = new RegisterPetRequest("bona", 5, Gender.GIRL, PetType.JINDO_DOG, 1L);
+        RegisterPetRequest registerPetRequest = new RegisterPetRequest("bona", 5, FEMALE, JINDO_DOG, 1L);
 
         // when
         Pet pet = petService.registerPet(registerPetRequest);

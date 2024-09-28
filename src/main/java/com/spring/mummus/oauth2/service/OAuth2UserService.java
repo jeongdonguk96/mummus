@@ -1,6 +1,6 @@
 package com.spring.mummus.oauth2.service;
 
-import com.spring.mummus.member.domain.entity.Member;
+import com.spring.mummus.member.entity.Member;
 import com.spring.mummus.member.repository.MemberRepository;
 import com.spring.mummus.member.service.MemberService;
 import com.spring.mummus.oauth2.domain.KakaoOAuth2;
