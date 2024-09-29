@@ -1,9 +1,7 @@
 package com.spring.mummus.member.service;
 
 import com.spring.mummus.exception.enums.MemberErrorCode;
-import com.spring.mummus.exception.enums.PetErrorCode;
 import com.spring.mummus.exception.exception.MemberException;
-import com.spring.mummus.exception.exception.PetException;
 import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.entity.Member;
 import com.spring.mummus.member.repository.MemberRepository;
@@ -60,7 +58,7 @@ public class MemberService {
     }
 
 
-    public Member findMemberById(Long memberId) {
+    public Member findById(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(
                 ()-> new MemberException(MemberErrorCode.USER_NOT_FOUND));
     }

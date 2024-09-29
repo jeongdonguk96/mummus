@@ -22,5 +22,11 @@ public class Pet extends BaseEntity {
     private Gender gender;
     @Enumerated(EnumType.STRING)
     private PetType petType; // 견종
+    private int followerCount;
     private Long memberId;
+
+
+    public void increaseFollowerCount() {
+        this.followerCount += 1;
+    }
 }

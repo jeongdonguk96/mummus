@@ -1,10 +1,9 @@
 package com.spring.mummus.follow.service;
 
-import com.spring.mummus.exception.enums.PetErrorCode;
-import com.spring.mummus.exception.exception.PetException;
 import com.spring.mummus.follow.dto.FollowPetRequest;
 import com.spring.mummus.follow.entity.Follow;
 import com.spring.mummus.follow.repository.FollowRepository;
+import com.spring.mummus.member.service.MemberService;
 import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.repository.PetRepository;
 import com.spring.mummus.pet.service.PetService;
@@ -21,50 +20,51 @@ import java.util.List;
 public class FollowService {
 
     private final PetService petService;
+    private final MemberService memberService;
     private final PetRepository petRepository;
     private final FollowRepository followRepository;
 
 
-    // 팔로잉하는 강아지를 조회한다.
+    // 내가 팔로우하는 강아지를 조회한다.
     @Transactional(readOnly = true)
-    public List<Pet> getFollowingPets(Long id) {
-        List<Long> followingPetsId = followRepository.getFollowingPetsId(id);
+    public List<Pet> getFollowingPets(Long memberId) {
         // TODO: 프론트에서 사용할 정보만 담아 DTO로 변환하여 응답
-        return petRepository.findAllById(followingPetsId);
+        return petRepository.getFollowingPets(memberId);
     }
 
 
-    // 팔로워 강아지를 조회한다.
+    // 내 강아지를 팔로우하는 강아지를 조회한다.
     @Transactional(readOnly = true)
-    public List<Pet> getFollowerPets(Long id) {
-        List<Long> followerPetsId = followRepository.getFollowerPetsId(id);
+    public List<Pet> getFollowerPets(Long petId) {
         // TODO: 프론트에서 사용할 정보만 담아 DTO로 변환하여 응답
-        return petRepository.findAllById(followerPetsId);
+        return petRepository.getFollowerPets(petId);
     }
 
 
-    // 팔로잉하는 강아지의 수를 조회한다.
+    // 내가 팔로우하는 강아지의 수를 조회한다.
     @Transactional(readOnly = true)
-    public Long countFollowingPets(Long id) {
-        return followRepository.countFollowingPets(id);
+    public Long countFollowingPets(Long memberId) {
+        return followRepository.countFollowingPets(memberId);
     }
 
 
-    // 팔로워 강아지의 수를 조회한다.
+    // 내 강아지를 팔로우하는 강아지의 수를 조회한다.
     @Transactional(readOnly = true)
-    public Long countFollowerPets(Long id) {
-        return followRepository.countFollowerPets(id);
+    public Long countFollowerPets(Long petId) {
+        return followRepository.countFollowerPets(petId);
     }
 
 
     // 다른 강아지를 팔로우한다.
     @Transactional
-    public void followPet(FollowPetRequest request) {
-        petService.findPetById(request.followerPetId());
-        petService.findPetById(request.followingPetId());
+    public Pet followPet(FollowPetRequest request) {
+        memberService.findById(request.followerMemberId());
+        Pet followingPet = petService.findById(request.followingPetId());
 
         Follow newFollow = request.from();
         followRepository.save(newFollow);
+
+        return followingPet;
     }
 
 }

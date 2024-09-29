@@ -27,6 +27,13 @@ public class PetService {
     }
 
 
+    // 강아지의 팔로워 수를 증가시킨다.
+    @Transactional
+    public void increaseFollowerCount(Pet pet) {
+        pet.increaseFollowerCount();
+    }
+
+
     public void checkDuplicatedPet(RegisterPetRequest registerPetRequest) {
         if (petRepository.existsByNameAndMemberId(registerPetRequest.getName(), registerPetRequest.getMemberId())) {
             throw new PetException(DUPLICATED_PET);
@@ -34,7 +41,7 @@ public class PetService {
     }
 
 
-    public Pet findPetById(Long id) {
+    public Pet findById(Long id) {
         return petRepository.findById(id).orElseThrow(
                 () -> new PetException(PetErrorCode.PET_NOT_FOUND));
     }
