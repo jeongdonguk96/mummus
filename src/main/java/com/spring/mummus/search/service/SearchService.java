@@ -59,7 +59,7 @@ public class SearchService {
         return searchedPets.stream()
                 .sorted(Comparator
                         .comparing(followerPets)
-                        .comparing(Pet::getFollowerCount).reversed())
+                        .thenComparing(Pet::getFollowerCount).reversed())
                 .collect(Collectors.toList());
     }
 
