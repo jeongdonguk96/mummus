@@ -1,5 +1,7 @@
 package com.spring.mummus.search.controller;
 
+import com.spring.mummus.pet.entity.Pet;
+import com.spring.mummus.pet.service.PetService;
 import com.spring.mummus.search.dto.SearchRequest;
 import com.spring.mummus.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/search")
 @RequiredArgsConstructor
 public class SearchController {
 
+    private final PetService petService;
     private final SearchService searchService;
 
 
@@ -22,7 +28,10 @@ public class SearchController {
         } else {
             searchService.saveSearch(request, memberId);
         }
-        searchService.searchPet(request, memberId);
+        List<Pet> searchedPet = searchService.searchPet(request);
+        Set<Pet> followingPets = petService.getFollowingPets(memberId);
+        Set<Pet> followerPets = petService.getFollowerPets(memberId);
+        List<Pet> searchResult = searchService.sortOrder(searchedPet, followingPets, followerPets);
     }
 
 }

@@ -21,6 +21,7 @@ public class MemberService {
 //    private final MemberReference memberReference;
 
 
+    // 회원가입을 진행한다.
     @Transactional
     public void signUp (MemberSignUpRequest memberSignUpRequest) {
         // 이메일 중복 체크
@@ -33,17 +34,15 @@ public class MemberService {
     }
 
 
+    // OAuth 회원의 회원가입을 진행한다.
     @Transactional
     public Member singUp(OAuth2 oAuth2) {
-        Member newMember = Member.builder()
-                .name(oAuth2.getName())
-                .provider(oAuth2.getProvider())
-                .build();
-
+        Member newMember = oAuth2.from(oAuth2);
         return memberRepository.save(newMember);
     }
 
 
+    // 중복된 이메일이 있는지 확인한다.
     private void checkDuplicatedEmail(String email) {
         if (memberRepository.existsByEmail(email)) {
             throw new MemberException(DUPLICATED_EMAIL);
@@ -51,6 +50,7 @@ public class MemberService {
     }
 
 
+    // 중복된 전화번호가 있는지 확인한다.
     private void checkDuplicatedPhoneNumber(String phoneNumber) {
         if (memberRepository.existsByPhoneNumber(phoneNumber)) {
             throw new MemberException(DUPLICATED_PHONE_NUMBER);
@@ -58,6 +58,7 @@ public class MemberService {
     }
 
 
+    // 회원 존재 여부를 확인한다.
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(
                 ()-> new MemberException(MemberErrorCode.USER_NOT_FOUND));

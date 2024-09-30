@@ -1,8 +1,11 @@
 package com.spring.mummus.oauth2.domain;
 
+import com.spring.mummus.member.entity.Member;
+
 import java.util.Map;
 
-public class KakaoOAuth2 implements OAuth2{
+public class KakaoOAuth2 implements OAuth2 {
+
     private Map<String, Object> attributes;
 
     public KakaoOAuth2(Map<String, Object> attributes) {
@@ -22,6 +25,14 @@ public class KakaoOAuth2 implements OAuth2{
     @Override
     public String getName() {
         return (String) attributes.get("name");
+    }
+
+    @Override
+    public Member from(OAuth2 oAuth2) {
+        return Member.builder()
+                .name(oAuth2.getName())
+                .provider(oAuth2.getProvider())
+                .build();
     }
 //    public static String snsId;
 //    public static Map<String, Object> account;
