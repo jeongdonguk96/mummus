@@ -25,6 +25,19 @@ public class FollowService {
     private final FollowRepository followRepository;
 
 
+    // 다른 강아지를 팔로우한다.
+    @Transactional
+    public Pet followPet(FollowPetRequest request) {
+        memberService.findById(request.followerMemberId());
+        Pet followingPet = petService.findById(request.followingPetId());
+
+        Follow newFollow = request.from();
+        followRepository.save(newFollow);
+
+        return followingPet;
+    }
+
+
     // 내가 팔로우하는 강아지를 조회한다.
     @Transactional(readOnly = true)
     public List<Pet> getFollowingPets(Long memberId) {
@@ -52,19 +65,6 @@ public class FollowService {
     @Transactional(readOnly = true)
     public Long countFollowerPets(Long petId) {
         return followRepository.countFollowerPets(petId);
-    }
-
-
-    // 다른 강아지를 팔로우한다.
-    @Transactional
-    public Pet followPet(FollowPetRequest request) {
-        memberService.findById(request.followerMemberId());
-        Pet followingPet = petService.findById(request.followingPetId());
-
-        Follow newFollow = request.from();
-        followRepository.save(newFollow);
-
-        return followingPet;
     }
 
 }

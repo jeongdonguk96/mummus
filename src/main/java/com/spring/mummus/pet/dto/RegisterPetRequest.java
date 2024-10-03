@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RegisterPetRequest {
     private String name;
-    private Integer age;
+    private int age;
+    private String birth;
     private Gender gender;
     private PetType petType;
     private Long memberId;
@@ -21,6 +22,7 @@ public class RegisterPetRequest {
         return Pet.builder()
                 .name(this.getName())
                 .age(this.getAge())
+                .birth(this.getBirth())
                 .gender(this.getGender())
                 .petType(this.getPetType())
                 .memberId(this.getMemberId())
