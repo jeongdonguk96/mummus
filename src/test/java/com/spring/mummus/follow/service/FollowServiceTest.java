@@ -1,6 +1,6 @@
 package com.spring.mummus.follow.service;
 
-import com.spring.mummus.AbstractTestClass;
+import com.spring.mummus.AbstractTest;
 import com.spring.mummus.follow.dto.FollowPetRequest;
 import com.spring.mummus.follow.entity.Follow;
 import com.spring.mummus.follow.repository.FollowRepository;
@@ -20,7 +20,7 @@ import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
 import static com.spring.mummus.pet.enums.PetType.SHIVA_INU;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FollowServiceTest extends AbstractTestClass {
+class FollowServiceTest extends AbstractTest {
 
     @Autowired PetService petService;
     @Autowired FollowService followService;

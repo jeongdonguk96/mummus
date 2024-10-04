@@ -1,6 +1,6 @@
 package com.spring.mummus.pet.service;
 
-import com.spring.mummus.AbstractTestClass;
+import com.spring.mummus.AbstractTest;
 import com.spring.mummus.pet.dto.RegisterPetRequest;
 import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.repository.PetRepository;
@@ -12,7 +12,7 @@ import static com.spring.mummus.pet.enums.Gender.FEMALE;
 import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PetServiceTest extends AbstractTestClass {
+class PetServiceTest extends AbstractTest {
 
     @Autowired PetService petService;
     @Autowired PetRepository petRepository;

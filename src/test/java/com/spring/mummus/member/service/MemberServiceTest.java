@@ -1,6 +1,6 @@
 package com.spring.mummus.member.service;
 
-import com.spring.mummus.AbstractTestClass;
+import com.spring.mummus.AbstractTest;
 import com.spring.mummus.exception.exception.MemberException;
 import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.entity.Member;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MemberServiceTest extends AbstractTestClass {
+class MemberServiceTest extends AbstractTest {
 
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;

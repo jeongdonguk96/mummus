@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Transactional
 @SpringBootTest
-public abstract class AbstractTestClass implements InitializingBean {
+public abstract class AbstractTest implements InitializingBean {
 
     @Autowired JdbcTemplate jdbcTemplate;
     @Autowired EntityManager em;
