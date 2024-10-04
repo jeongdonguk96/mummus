@@ -1,6 +1,6 @@
 package com.spring.mummus.follow.service;
 
-import com.spring.mummus.AbstractTest;
+import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.follow.dto.FollowPetRequest;
 import com.spring.mummus.follow.entity.Follow;
 import com.spring.mummus.follow.repository.FollowRepository;

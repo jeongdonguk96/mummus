@@ -1,6 +1,6 @@
 package com.spring.mummus.pet.service;
 
-import com.spring.mummus.AbstractTest;
+import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.pet.dto.RegisterPetRequest;
 import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.repository.PetRepository;

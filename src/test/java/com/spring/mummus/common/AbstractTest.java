@@ -1,4 +1,4 @@
-package com.spring.mummus;
+package com.spring.mummus.common;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;

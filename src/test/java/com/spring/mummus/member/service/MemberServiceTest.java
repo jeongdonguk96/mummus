@@ -1,6 +1,8 @@
 package com.spring.mummus.member.service;
 
-import com.spring.mummus.AbstractTest;
+import com.navercorp.fixturemonkey.FixtureMonkey;
+import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector;
+import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.exception.exception.MemberException;
 import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.entity.Member;
@@ -26,6 +28,14 @@ class MemberServiceTest extends AbstractTest {
     void signUpTest() {
         //given
         MemberSignUpRequest request = new MemberSignUpRequest("test@naver.com", "password", "testName", "testAddress", "testPhoneNumber");
+        FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
+                .objectIntrospector(ConstructorPropertiesArbitraryIntrospector.INSTANCE)
+                .build();
+
+        Member sample = fixtureMonkey.giveMeBuilder(Member.class)
+                .set("name", "동욱")
+                .sample();
+        System.out.println("sample = " + sample);
 
         //when
         memberService.signUp(request);
