@@ -1,15 +1,11 @@
 package com.spring.mummus.member.service;
 
-import com.navercorp.fixturemonkey.FixtureMonkey;
-import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector;
 import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.exception.exception.MemberException;
 import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.entity.Member;
-import com.spring.mummus.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.spring.mummus.exception.enums.MemberErrorCode.DUPLICATED_EMAIL;
 import static com.spring.mummus.exception.enums.MemberErrorCode.DUPLICATED_PHONE_NUMBER;
@@ -19,23 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MemberServiceTest extends AbstractTest {
 
-    @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
-
-  
     @Test
     @DisplayName("회원가입이 성공한다.")
     void signUpTest() {
         //given
         MemberSignUpRequest request = new MemberSignUpRequest("test@naver.com", "password", "testName", "testAddress", "testPhoneNumber");
-        FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
-                .objectIntrospector(ConstructorPropertiesArbitraryIntrospector.INSTANCE)
-                .build();
-
-        Member sample = fixtureMonkey.giveMeBuilder(Member.class)
-                .set("name", "동욱")
-                .sample();
-        System.out.println("sample = " + sample);
 
         //when
         memberService.signUp(request);
@@ -59,9 +43,7 @@ class MemberServiceTest extends AbstractTest {
 
         //when
         memberService.signUp(request1);
-        MemberException memberException = assertThrows(MemberException.class, () -> {
-            memberService.signUp(request2);
-        });
+        MemberException memberException = assertThrows(MemberException.class, () -> memberService.signUp(request2));
 
         //then
         assertEquals(DUPLICATED_EMAIL, memberException.getErrorCode());
@@ -77,9 +59,7 @@ class MemberServiceTest extends AbstractTest {
 
         //when
         memberService.signUp(request1);
-        MemberException memberException = assertThrows(MemberException.class, () -> {
-            memberService.signUp(request2);
-        });
+        MemberException memberException = assertThrows(MemberException.class, () -> memberService.signUp(request2));
 
         //then
         assertEquals(DUPLICATED_PHONE_NUMBER, memberException.getErrorCode());
@@ -102,6 +82,5 @@ class MemberServiceTest extends AbstractTest {
         assertThat(member.getEmail()).isEqualTo(targetMember.getEmail());
         assertThat(member.getName()).isEqualTo(targetMember.getName());
     }
-
 
 }

@@ -1,5 +1,6 @@
 package com.spring.mummus.search.controller;
 
+import com.spring.mummus.follow.service.FollowService;
 import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.service.PetService;
 import com.spring.mummus.search.dto.SearchRequest;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ import java.util.Set;
 public class SearchController {
 
     private final PetService petService;
+    private final FollowService followService;
     private final SearchService searchService;
 
 
@@ -29,8 +32,8 @@ public class SearchController {
             searchService.saveSearch(request, memberId);
         }
         List<Pet> searchedPet = searchService.searchPet(request);
-        Set<Pet> followingPets = petService.getFollowingPets(memberId);
-        Set<Pet> followerPets = petService.getFollowerPets(memberId);
+        Set<Pet> followingPets = new HashSet<>(followService.getFollowingPets(memberId));
+        Set<Pet> followerPets = followService.getFollowerPetsByMember(memberId);
         List<Pet> searchResult = searchService.sortOrder(searchedPet, followingPets, followerPets);
     }
 

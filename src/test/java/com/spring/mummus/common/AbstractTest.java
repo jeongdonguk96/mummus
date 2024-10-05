@@ -1,5 +1,11 @@
 package com.spring.mummus.common;
 
+import com.spring.mummus.follow.repository.FollowRepository;
+import com.spring.mummus.follow.service.FollowService;
+import com.spring.mummus.member.repository.MemberRepository;
+import com.spring.mummus.member.service.MemberService;
+import com.spring.mummus.pet.repository.PetRepository;
+import com.spring.mummus.pet.service.PetService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
@@ -18,6 +24,13 @@ public abstract class AbstractTest implements InitializingBean {
 
     @Autowired JdbcTemplate jdbcTemplate;
     @Autowired EntityManager em;
+
+    @Autowired public PetService petService;
+    @Autowired public MemberService memberService;
+    @Autowired public FollowService followService;
+    @Autowired public PetRepository petRepository;
+    @Autowired public MemberRepository memberRepository;
+    @Autowired public FollowRepository followRepository;
 
     private List<String> entities;
 

@@ -47,7 +47,7 @@ public class FollowController {
     // 내 강아지를 팔로우하는 강아지를 조회한다.
     @GetMapping("/followers/{petId}")
     public void getFollowerPets(@PathVariable(name = "petId") Long petId) {
-        followService.getFollowerPets(petId);
+        followService.getFollowerPetsByPet(petId);
     }
 
 

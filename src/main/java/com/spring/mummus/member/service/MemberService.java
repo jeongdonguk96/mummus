@@ -23,7 +23,7 @@ public class MemberService {
 
     // 회원가입을 진행한다.
     @Transactional
-    public Member signUp (MemberSignUpRequest memberSignUpRequest) {
+    public Member signUp(MemberSignUpRequest memberSignUpRequest) {
         // 이메일 중복 체크
         checkDuplicatedEmail(memberSignUpRequest.getEmail());
 

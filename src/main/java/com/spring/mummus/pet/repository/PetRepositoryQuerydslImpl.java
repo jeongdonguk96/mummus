@@ -39,7 +39,7 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
         return queryFactory
                 .select(pet)
                 .from(follow)
-                .join(pet).on(follow.followingPetId.eq(pet.id))
+                .join(pet).on(pet.id.eq(follow.followingPetId))
                 .where(follow.followerMemberId.eq(memberId))
                 .fetch();
     }
@@ -50,7 +50,7 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
         return queryFactory
                 .select(pet)
                 .from(follow)
-                .join(pet).on(follow.followerMemberId.eq(pet.memberId))
+                .join(pet).on(pet.memberId.eq(follow.followerMemberId))
                 .where(follow.followingPetId.eq(petId))
                 .fetch();
     }
