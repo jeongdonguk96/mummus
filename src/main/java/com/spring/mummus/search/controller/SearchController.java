@@ -6,6 +6,7 @@ import com.spring.mummus.search.dto.SearchRequest;
 import com.spring.mummus.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class SearchController {
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     @GetMapping()
-    public void searchPet(SearchRequest request, Long memberId) {
+    public void searchPet(@RequestBody SearchRequest request, Long memberId) {
         List<Pet> searchedPet;
         Set<Pet> followerPets = null;
         Set<Pet> followingPets = null;

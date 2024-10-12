@@ -8,13 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/follow")
 @RequiredArgsConstructor
-public class FollowController {
+public class FollowController implements FollowControllerDocs {
 
     private final PetService petService;
     private final FollowService followService;
@@ -23,7 +24,7 @@ public class FollowController {
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 다른 강아지를 팔로우한다.
     @PostMapping("/follow")
-    public void followPet(FollowPetRequest request, Long memberId) {
+    public void followPet(@RequestBody FollowPetRequest request, @RequestBody Long memberId) {
         Pet followingPet = followService.followPet(request, memberId);
         petService.increaseFollowerCount(followingPet);
     }
@@ -32,7 +33,7 @@ public class FollowController {
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 다른 강아지를 팔로우한다.
     @PostMapping("/unfollow")
-    public void unfollowPet(FollowPetRequest request, Long memberId) {
+    public void unfollowPet(@RequestBody FollowPetRequest request, @RequestBody Long memberId) {
         Pet unfollowedPet = followService.unfollowPet(request, memberId);
         petService.decreaseFollowerCount(unfollowedPet);
     }
