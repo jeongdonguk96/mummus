@@ -17,9 +17,9 @@ public class MemberSignUpRequest {
 
     public Member toEntity() {
         return Member.builder()
-                .name(this.getName())
                 .email(this.getEmail())
                 .password(this.getPassword())
+                .name(this.getName())
                 .address(this.getAddress())
                 .phoneNumber(this.getPhoneNumber())
                 .build();

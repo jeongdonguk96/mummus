@@ -11,10 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -38,20 +38,23 @@ public class SearchService {
 
     // 검색어에 맞는 강아지를 찾는다.
     @Transactional(readOnly = true)
-    public List<Pet> searchPet(SearchRequest request) {
-        return petRepository.searchPet(request.keyword());
+    public List<Pet> searchPet(SearchRequest request, Long memberId) {
+        return petRepository.searchPet(request.keyword(), memberId);
     }
 
 
     // 우선 순위를 정해 걸색 결과를 정렬한다.
     @Transactional(readOnly = true)
-    public List<Pet> sortOrder(List<Pet> searchedPets, Set<Pet> followingPets, Set<Pet> followerPets) {
+    public List<Pet> sortOrder(List<Pet> searchedPets, Set<Pet> followerPets, Set<Pet> followingPets) {
+        Set<Pet> nullCheckedFollowerPets = followerPets != null ? followerPets : Collections.emptySet();
+        Set<Pet> nullCheckedFollowingPets = followingPets != null ? followingPets : Collections.emptySet();
+
         return searchedPets.stream()
                 .sorted(Comparator
-                        .comparing((Pet pet) -> followingPets.contains(pet) || followerPets.contains(pet)).reversed()
+                        .comparing((Pet pet) -> nullCheckedFollowerPets.contains(pet) ||  nullCheckedFollowingPets.contains(pet))
                         .thenComparing(Pet::getFollowerCount).reversed()
                 )
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

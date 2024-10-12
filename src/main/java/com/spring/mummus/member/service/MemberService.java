@@ -23,14 +23,14 @@ public class MemberService {
 
     // 회원가입을 진행한다.
     @Transactional
-    public void signUp (MemberSignUpRequest memberSignUpRequest) {
+    public Member signUp(MemberSignUpRequest memberSignUpRequest) {
         // 이메일 중복 체크
         checkDuplicatedEmail(memberSignUpRequest.getEmail());
 
         // 휴대폰 번호 중복 체크
         checkDuplicatedPhoneNumber(memberSignUpRequest.getPhoneNumber());
 
-        memberRepository.save(memberSignUpRequest.toEntity());
+        return memberRepository.save(memberSignUpRequest.toEntity());
     }
 
 

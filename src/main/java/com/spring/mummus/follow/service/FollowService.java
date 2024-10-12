@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -25,6 +27,19 @@ public class FollowService {
     private final FollowRepository followRepository;
 
 
+    // 다른 강아지를 팔로우한다.
+    @Transactional
+    public Pet followPet(FollowPetRequest request) {
+        memberService.findById(request.followerMemberId());
+        Pet followingPet = petService.findById(request.followingPetId());
+
+        Follow newFollow = request.from();
+        followRepository.save(newFollow);
+
+        return followingPet;
+    }
+
+
     // 내가 팔로우하는 강아지를 조회한다.
     @Transactional(readOnly = true)
     public List<Pet> getFollowingPets(Long memberId) {
@@ -35,9 +50,23 @@ public class FollowService {
 
     // 내 강아지를 팔로우하는 강아지를 조회한다.
     @Transactional(readOnly = true)
-    public List<Pet> getFollowerPets(Long petId) {
+    public List<Pet> getFollowerPetsByPet(Long petId) {
         // TODO: 프론트에서 사용할 정보만 담아 DTO로 변환하여 응답
         return petRepository.getFollowerPets(petId);
+    }
+
+
+    // 나를 팔로우하는 강아지들을 가져온다.
+    @Transactional(readOnly = true)
+    public Set<Pet> getFollowerPetsByMember(Long memberId) {
+        List<Long> myPetIds = petRepository.findMyPets(memberId);
+        Set<Pet> followerPets = new HashSet<>();
+        for (Long myPetId : myPetIds) {
+            List<Pet> tempFollowerPets = petRepository.getFollowerPets(myPetId);
+            followerPets.addAll(tempFollowerPets);
+        }
+
+        return followerPets;
     }
 
 
@@ -52,19 +81,6 @@ public class FollowService {
     @Transactional(readOnly = true)
     public Long countFollowerPets(Long petId) {
         return followRepository.countFollowerPets(petId);
-    }
-
-
-    // 다른 강아지를 팔로우한다.
-    @Transactional
-    public Pet followPet(FollowPetRequest request) {
-        memberService.findById(request.followerMemberId());
-        Pet followingPet = petService.findById(request.followingPetId());
-
-        Follow newFollow = request.from();
-        followRepository.save(newFollow);
-
-        return followingPet;
     }
 
 }

@@ -26,10 +26,12 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
 
 
     @Override
-    public List<Pet> searchPet(String keyword) {
+    public List<Pet> searchPet(String keyword, Long memberId) {
         return queryFactory
                 .selectFrom(pet)
-                .where(pet.name.containsIgnoreCase(keyword))
+                .where(pet.name.containsIgnoreCase(keyword)
+                        .and(memberId != null ? pet.memberId.eq(memberId).not() : null)
+                )
                 .fetch();
     }
 
@@ -39,7 +41,7 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
         return queryFactory
                 .select(pet)
                 .from(follow)
-                .join(pet).on(follow.followingPetId.eq(pet.id))
+                .join(pet).on(pet.id.eq(follow.followingPetId))
                 .where(follow.followerMemberId.eq(memberId))
                 .fetch();
     }
@@ -50,7 +52,7 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
         return queryFactory
                 .select(pet)
                 .from(follow)
-                .join(pet).on(follow.followerMemberId.eq(pet.memberId))
+                .join(pet).on(pet.memberId.eq(follow.followerMemberId))
                 .where(follow.followingPetId.eq(petId))
                 .fetch();
     }

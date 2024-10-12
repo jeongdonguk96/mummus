@@ -26,5 +26,5 @@ public class Image extends BaseEntity {
     private ImageDomain imageDomain;
     private Long domainId;
     private String path;
-    private int order;
+    private Long sequence;
 }
