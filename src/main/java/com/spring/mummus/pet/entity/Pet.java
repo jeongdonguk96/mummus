@@ -30,4 +30,9 @@ public class Pet extends BaseEntity {
     public void increaseFollowerCount() {
         this.followerCount += 1;
     }
+
+
+    public void decreaseFollowerCount() {
+        this.followerCount -= 1;
+    }
 }

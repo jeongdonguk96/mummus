@@ -20,11 +20,21 @@ public class FollowController {
     private final FollowService followService;
 
 
+    // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 다른 강아지를 팔로우한다.
-    @PostMapping()
-    public void followPet(FollowPetRequest request) {
-        Pet followingPet = followService.followPet(request);
+    @PostMapping("/follow")
+    public void followPet(FollowPetRequest request, Long memberId) {
+        Pet followingPet = followService.followPet(request, memberId);
         petService.increaseFollowerCount(followingPet);
+    }
+
+
+    // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
+    // 다른 강아지를 팔로우한다.
+    @PostMapping("/unfollow")
+    public void unfollowPet(FollowPetRequest request, Long memberId) {
+        Pet unfollowedPet = followService.unfollowPet(request, memberId);
+        petService.decreaseFollowerCount(unfollowedPet);
     }
 
 
