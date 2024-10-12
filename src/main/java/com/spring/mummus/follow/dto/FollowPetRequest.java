@@ -3,13 +3,12 @@ package com.spring.mummus.follow.dto;
 import com.spring.mummus.follow.entity.Follow;
 
 public record FollowPetRequest(
-        Long followerMemberId,
         Long followingPetId
 ) {
 
-    public Follow from() {
+    public Follow from(Long followerMemberId) {
         return Follow.builder()
-                .followerMemberId(this.followerMemberId)
+                .followerMemberId(followerMemberId)
                 .followingPetId(this.followingPetId)
                 .build();
     }

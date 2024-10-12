@@ -35,6 +35,13 @@ public class PetService {
     }
 
 
+    // 강아지의 팔로워 수를 하락시킨다.
+    @Transactional
+    public void decreaseFollowerCount(Pet pet) {
+        pet.decreaseFollowerCount();
+    }
+
+
     // 강아지 존재 여부를 확인한다.
     public Pet findById(Long id) {
         return petRepository.findById(id).orElseThrow(

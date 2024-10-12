@@ -29,14 +29,26 @@ public class FollowService {
 
     // 다른 강아지를 팔로우한다.
     @Transactional
-    public Pet followPet(FollowPetRequest request) {
-        memberService.findById(request.followerMemberId());
+    public Pet followPet(FollowPetRequest request, Long memberId) {
+        memberService.findById(memberId);
         Pet followingPet = petService.findById(request.followingPetId());
 
-        Follow newFollow = request.from();
+        Follow newFollow = request.from(memberId);
         followRepository.save(newFollow);
 
         return followingPet;
+    }
+
+
+    // 다른 강아지를 언팔로우한다.
+    @Transactional
+    public Pet unfollowPet(FollowPetRequest request, Long memberId) {
+        memberService.findById(memberId);
+        Pet unfollowedPet = petService.findById(request.followingPetId());
+
+        followRepository.deleteFollow(request.followingPetId(), memberId);
+
+        return unfollowedPet;
     }
 
 

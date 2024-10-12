@@ -30,4 +30,14 @@ public class FollowRepositoryQuerydslImpl implements FollowRepositoryQuerydsl {
                 .fetchOne();
     }
 
+    @Override
+    public void deleteFollow(Long petId, Long memberId) {
+        queryFactory
+                .delete(follow)
+                .where(follow.followingPetId.eq(petId)
+                        .and(follow.followerMemberId.eq(memberId))
+                )
+                .execute();
+    }
+
 }

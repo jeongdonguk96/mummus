@@ -48,15 +48,33 @@ class FollowServiceTest extends AbstractTest {
     @DisplayName("팔로우가 정상적으로 등록된다.")
     void followPetTest() {
         // given
-        FollowPetRequest followRequest = new FollowPetRequest(1L, 2L);
+        FollowPetRequest followRequest = new FollowPetRequest(2L);
 
         // when
-        Pet pet = followService.followPet(followRequest);
+        Pet pet = followService.followPet(followRequest, member1.getId());
         Follow follow = followRepository.findById(1L).get();
 
         // then
         assertThat(follow.getFollowerMemberId()).isEqualTo(member1.getId());
         assertThat(follow.getFollowingPetId()).isEqualTo(pet.getId());
+    }
+
+
+    @Test
+    @DisplayName("언팔로우가 정상적으로 처리된다.")
+    void unfollowPetTest() {
+        // given
+        saveFollow(member1.getId(), pet3.getId());
+        saveFollow(member1.getId(), pet4.getId());
+        FollowPetRequest followRequest = new FollowPetRequest(3L);
+
+        // when
+        followService.unfollowPet(followRequest, member1.getId());
+        List<Follow> follows = followRepository.findAll();
+
+        // then
+        assertThat(follows).hasSize(1);
+        assertThat(follows.get(0).getFollowingPetId()).isEqualTo(4L);
     }
 
 
