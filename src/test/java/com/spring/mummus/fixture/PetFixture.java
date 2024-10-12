@@ -19,10 +19,15 @@ public class PetFixture {
                 .id(id)
                 .memberId(memberId)
                 .build();
-//        return fixtureMonkey.giveMeBuilder(Pet.class)
-//                .set("id", id)
-//                .set("memberId", memberId)
-//                .sample();
+    }
+
+
+    public static Pet createPet(Long id, Long memberId, String name) {
+        return Pet.builder()
+                .id(id)
+                .memberId(memberId)
+                .name(name)
+                .build();
     }
 
 }

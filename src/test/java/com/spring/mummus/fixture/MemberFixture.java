@@ -11,7 +11,7 @@ public class MemberFixture {
             .objectIntrospector(ConstructorPropertiesArbitraryIntrospector.INSTANCE)
             .defaultNotNull(true)
             .plugin(new JakartaValidationPlugin())
-            .build();;
+            .build();
 
 
     public static Member createMember(Long id) {

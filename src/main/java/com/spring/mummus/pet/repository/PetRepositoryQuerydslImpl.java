@@ -26,10 +26,12 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
 
 
     @Override
-    public List<Pet> searchPet(String keyword) {
+    public List<Pet> searchPet(String keyword, Long memberId) {
         return queryFactory
                 .selectFrom(pet)
-                .where(pet.name.containsIgnoreCase(keyword))
+                .where(pet.name.containsIgnoreCase(keyword)
+                        .and(memberId != null ? pet.memberId.eq(memberId).not() : null)
+                )
                 .fetch();
     }
 
