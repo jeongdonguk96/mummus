@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberController implements MemberControllerDocs {
 
     private final MemberService memberService;
 
 
+    // 회원가입을 진행한다.
     @PostMapping("/signup")
     public void signUp (@RequestBody MemberSignUpRequest memberSignUpRequest) {
         memberService.signUp(memberSignUpRequest);
