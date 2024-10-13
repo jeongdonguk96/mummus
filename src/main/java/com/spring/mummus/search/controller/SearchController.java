@@ -16,15 +16,17 @@ import java.util.Set;
 @RestController
 @RequestMapping("/search")
 @RequiredArgsConstructor
-public class SearchController {
+public class SearchController implements SearchControllerDocs {
 
     private final FollowService followService;
     private final SearchService searchService;
 
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
-    @GetMapping()
-    public void searchPet(SearchRequest request, Long memberId) {
+    // 다른 강아지를 검색한다.
+    @GetMapping("/search")
+    public void searchPet(SearchRequest request) {
+        Long memberId = 1L;
         List<Pet> searchedPet;
         Set<Pet> followerPets = null;
         Set<Pet> followingPets = null;

@@ -33,9 +33,8 @@ public class SecurityConfig {
                                         userInfoEndpoint.userService(oAuth2UserService)))
                 .authorizeHttpRequests(authorizeHttpRequests ->
                         authorizeHttpRequests
-                                .requestMatchers("/member/**").permitAll()
-                                .requestMatchers("/pet/**").permitAll()
-                                .requestMatchers("/image/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated());
 
         return http.build();
