@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/image")
@@ -23,12 +24,13 @@ public class ImageController {
     // 파일을 업로드한다.
     @PostMapping
     public void uploadTest(
-            @RequestParam(name = "files") MultipartFile[] multipartFiles,
+            @RequestParam(name = "files") List<MultipartFile> multipartFiles,
             @RequestParam(name = "domain") ImageDomain domain
     ) throws IOException {
-        Long memberId = 1L;
+        Long domainId = 1L;
+        Long memberId = 2L;
         imageService.upload(multipartFiles, domain, memberId);
-        imageService.insert(multipartFiles, domain, memberId);
+        imageService.insert(multipartFiles, domain, domainId, memberId);
     }
 
 }

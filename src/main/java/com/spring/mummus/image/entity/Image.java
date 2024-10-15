@@ -32,9 +32,10 @@ public class Image extends BaseEntity {
     private Long memberId;
 
 
-    public static Image from(ImageDomain imageDomain, String path, int sequence, Long memberId) {
+    public static Image from(ImageDomain imageDomain, Long domainId, String path, int sequence, Long memberId) {
         return Image.builder()
                 .imageDomain(imageDomain)
+                .domainId(domainId)
                 .path(path)
                 .sequence(sequence)
                 .memberId(memberId)

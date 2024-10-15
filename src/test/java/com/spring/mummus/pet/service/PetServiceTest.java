@@ -9,6 +9,8 @@ import com.spring.mummus.pet.entity.Pet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static com.spring.mummus.pet.enums.Gender.FEMALE;
 import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +21,7 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지가 정상적으로 등록된다.")
-    void registerPetTest() {
+    void registerPetTest() throws IOException {
         // given
         RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
 
@@ -50,7 +52,7 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지 등록 시 중복체크를 진행한다.")
-    void checkDuplicatedPetTest() {
+    void checkDuplicatedPetTest() throws IOException {
         // given
         RegisterPetRequest request1 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
         RegisterPetRequest request2 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
@@ -66,7 +68,7 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지 존재 여부가 확인된다.")
-    void findByIdTest() {
+    void findByIdTest() throws IOException {
         //given
         RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
 

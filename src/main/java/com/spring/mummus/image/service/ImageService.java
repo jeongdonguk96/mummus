@@ -32,7 +32,7 @@ public class ImageService {
 
     // 파일을 S3에 업로드한다.
     @Transactional
-    public void upload(MultipartFile[] files, ImageDomain domain, Long memberId) throws IOException {
+    public void upload(List<MultipartFile> files, ImageDomain domain, Long memberId) throws IOException {
         for (MultipartFile file : files) {
             String filename = extractFilename(domain, memberId, file);
             ObjectMetadata metadata = setObjectMetadata(file);
@@ -44,12 +44,12 @@ public class ImageService {
 
     // 파일을 저장한다.
     @Transactional
-    public void insert(MultipartFile[] files, ImageDomain domain, Long memberId) {
+    public void insert(List<MultipartFile> files, ImageDomain domain, Long domainId, Long memberId) {
         List<Image> images = new ArrayList<>();
 
-        for (int i = 0; i < files.length; i++) {
-            String filename = extractFilename(domain, memberId, files[i]);
-            Image image = Image.from(domain, filename, i + 1, memberId);
+        for (int i = 0; i < files.size(); i++) {
+            String filename = extractFilename(domain, memberId, files.get(i));
+            Image image = Image.from(domain, domainId, filename, i + 1, memberId);
             images.add(image);
         }
 

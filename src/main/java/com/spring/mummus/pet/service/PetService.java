@@ -21,10 +21,9 @@ public class PetService {
 
     // 강아지를 등록한다.
     @Transactional
-    public Pet registerPet(RegisterPetRequest registerPetRequest) {
-        checkDuplicatedPet(registerPetRequest);
-
-        return petRepository.save(registerPetRequest.toEntity());
+    public Pet registerPet(RegisterPetRequest request) {
+        checkDuplicatedPet(request);
+        return petRepository.save(request.toEntity());
     }
 
 
