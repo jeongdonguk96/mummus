@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/follow")
 @RequiredArgsConstructor
@@ -47,7 +49,11 @@ public class FollowController implements FollowControllerDocs {
     @GetMapping("/following")
     public void getFollowingPets() {
         Long memberId = 1L;
-        followService.getFollowingPets(memberId);
+        List<Pet> followingPets = followService.getFollowingPets(memberId);
+
+        if (followingPets.isEmpty()) {
+            return;
+        }
     }
 
 
@@ -63,7 +69,11 @@ public class FollowController implements FollowControllerDocs {
     // 내 강아지를 팔로우하는 강아지를 조회한다.
     @GetMapping("/followers/{petId}")
     public void getFollowerPets(@PathVariable(name = "petId") Long petId) {
-        followService.getFollowerPetsByPet(petId);
+        List<Pet> followerPets = followService.getFollowerPetsByPet(petId);
+
+        if (followerPets.isEmpty()) {
+            return;
+        }
     }
 
 

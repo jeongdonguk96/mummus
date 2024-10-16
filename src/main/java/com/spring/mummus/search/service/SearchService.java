@@ -39,7 +39,7 @@ public class SearchService {
     // 검색어에 맞는 강아지를 찾는다.
     @Transactional(readOnly = true)
     public List<Pet> searchPet(SearchRequest request, Long memberId) {
-        return petRepository.searchPet(request.keyword(), memberId);
+        return petRepository.searchPets(request.keyword(), memberId);
     }
 
 

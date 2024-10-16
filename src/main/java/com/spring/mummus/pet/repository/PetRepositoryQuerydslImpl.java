@@ -16,7 +16,15 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
 
 
     @Override
-    public List<Long> findMyPets(Long memberId) {
+    public List<Pet> findMyPets(Long memberId) {
+        return queryFactory
+                .selectFrom(pet)
+                .where(pet.memberId.eq(memberId))
+                .fetch();
+    }
+
+    @Override
+    public List<Long> findMyPetsIds(Long memberId) {
         return queryFactory
                 .select(pet.id)
                 .from(pet)
@@ -26,7 +34,7 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
 
 
     @Override
-    public List<Pet> searchPet(String keyword, Long memberId) {
+    public List<Pet> searchPets(String keyword, Long memberId) {
         return queryFactory
                 .selectFrom(pet)
                 .where(pet.name.containsIgnoreCase(keyword)

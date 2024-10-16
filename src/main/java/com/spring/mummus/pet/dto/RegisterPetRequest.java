@@ -16,16 +16,15 @@ public class RegisterPetRequest {
     private String birth;
     private Gender gender;
     private PetType petType;
-    private Long memberId;
 
-    public Pet toEntity() {
+    public Pet toEntity(Long memberId) {
         return Pet.builder()
                 .name(this.getName())
                 .age(this.getAge())
                 .birth(this.getBirth())
                 .gender(this.getGender())
                 .petType(this.getPetType())
-                .memberId(this.getMemberId())
+                .memberId(memberId)
                 .build();
     }
 }

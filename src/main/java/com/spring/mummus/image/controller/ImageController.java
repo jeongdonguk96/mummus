@@ -2,6 +2,7 @@ package com.spring.mummus.image.controller;
 
 import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.image.service.ImageService;
+import com.spring.mummus.image.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ImageController {
 
+    private final S3Service s3Service;
     private final ImageService imageService;
 
 
@@ -29,8 +31,8 @@ public class ImageController {
     ) throws IOException {
         Long domainId = 1L;
         Long memberId = 2L;
-        imageService.upload(multipartFiles, domain, memberId);
-        imageService.insert(multipartFiles, domain, domainId, memberId);
+        s3Service.upload(multipartFiles, domain, memberId);
+        imageService.createImage(multipartFiles, domain, domainId, memberId);
     }
 
 }
