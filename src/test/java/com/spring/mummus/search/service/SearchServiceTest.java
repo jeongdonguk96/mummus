@@ -14,9 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,23 +48,6 @@ class SearchServiceTest extends AbstractTest {
 
 
     @Test
-    @DisplayName("검색 기록이 정상적으로 저장된다.")
-    void saveSearchTest() {
-        // given
-        SearchRequest request = new SearchRequest("오번이");
-
-        // when
-        searchService.saveSearch(request, member1.getId());
-        List<Search> searches = searchRepository.findAll();
-
-        // then
-        assertThat(searches).hasSize(1);
-        assertThat(searches.get(0).getMemberId()).isEqualTo(1L);
-        assertThat(searches.get(0).getKeyword()).isEqualTo("오번이");
-    }
-
-
-    @Test
     @DisplayName("강아지가 정상적으로 검색된다.")
     void searchPetTest() {
         // given
@@ -88,13 +69,10 @@ class SearchServiceTest extends AbstractTest {
     void sortOrderTest1() {
         // given
         SearchRequest request = new SearchRequest("번");
-        List<Pet> searchedPets = searchService.searchPet(request, member1.getId());
-        Set<Pet> followerPets = followService.getFollowerPetsByMember(member1.getId());
-        Set<Pet> followingPets = new HashSet<>(followService.getFollowingPets(member1.getId()));
-        petService.increaseFollowerCount(pet4);
+        pet4.increaseFollowerCount();
 
         // when
-        List<Pet> pets = searchService.sortOrder(searchedPets, followerPets, followingPets);
+        List<Pet> pets = searchService.searchPet(request, member1.getId());
 
         // then
         assertThat(pets).hasSize(4);
@@ -110,14 +88,13 @@ class SearchServiceTest extends AbstractTest {
     void sortOrderTest2() {
         // given
         SearchRequest request = new SearchRequest("번");
-        List<Pet> searchedPets = searchService.searchPet(request, null);
-        petService.increaseFollowerCount(pet4);
-        petService.increaseFollowerCount(pet4);
-        petService.increaseFollowerCount(pet3);
-        petService.increaseFollowerCount(pet2);
+        pet4.increaseFollowerCount();
+        pet4.increaseFollowerCount();
+        pet3.increaseFollowerCount();
+        pet2.increaseFollowerCount();
 
         // when
-        List<Pet> pets = searchService.sortOrder(searchedPets, null, null);
+        List<Pet> pets = searchService.searchPet(request, null);
 
         // then
         assertThat(pets).hasSize(6);

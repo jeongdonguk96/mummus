@@ -51,12 +51,12 @@ class FollowServiceTest extends AbstractTest {
         FollowPetRequest followRequest = new FollowPetRequest(2L);
 
         // when
-        Pet pet = followService.followPet(followRequest, member1.getId());
+        followService.followPet(followRequest, member1.getId());
         Follow follow = followRepository.findById(1L).get();
 
         // then
         assertThat(follow.getFollowerMemberId()).isEqualTo(member1.getId());
-        assertThat(follow.getFollowingPetId()).isEqualTo(pet.getId());
+        assertThat(follow.getFollowingPetId()).isEqualTo(followRequest.followingPetId());
     }
 
 

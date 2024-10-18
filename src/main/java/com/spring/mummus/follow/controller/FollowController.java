@@ -3,7 +3,6 @@ package com.spring.mummus.follow.controller;
 import com.spring.mummus.follow.dto.FollowPetRequest;
 import com.spring.mummus.follow.service.FollowService;
 import com.spring.mummus.pet.entity.Pet;
-import com.spring.mummus.pet.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowController implements FollowControllerDocs {
 
-    private final PetService petService;
     private final FollowService followService;
 
 
@@ -29,8 +27,7 @@ public class FollowController implements FollowControllerDocs {
     @PostMapping()
     public void followPet(@RequestBody FollowPetRequest request) {
         Long memberId = 1L;
-        Pet followingPet = followService.followPet(request, memberId);
-        petService.increaseFollowerCount(followingPet);
+        followService.followPet(request, memberId);
     }
 
 
@@ -39,8 +36,7 @@ public class FollowController implements FollowControllerDocs {
     @DeleteMapping()
     public void unfollowPet(@RequestBody FollowPetRequest request) {
         Long memberId = 1L;
-        Pet unfollowedPet = followService.unfollowPet(request, memberId);
-        petService.decreaseFollowerCount(unfollowedPet);
+        followService.unfollowPet(request, memberId);
     }
 
 
@@ -49,11 +45,7 @@ public class FollowController implements FollowControllerDocs {
     @GetMapping("/following")
     public void getFollowingPets() {
         Long memberId = 1L;
-        List<Pet> followingPets = followService.getFollowingPets(memberId);
-
-        if (followingPets.isEmpty()) {
-            return;
-        }
+        followService.getFollowingPets(memberId);
     }
 
 
@@ -70,10 +62,6 @@ public class FollowController implements FollowControllerDocs {
     @GetMapping("/followers/{petId}")
     public void getFollowerPets(@PathVariable(name = "petId") Long petId) {
         List<Pet> followerPets = followService.getFollowerPetsByPet(petId);
-
-        if (followerPets.isEmpty()) {
-            return;
-        }
     }
 
 
