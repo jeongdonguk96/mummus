@@ -33,9 +33,15 @@ public class SearchController implements SearchControllerDocs {
 
         if (memberId == null) {
             searchedPet = searchService.searchPet(request, memberId);
+            if (searchedPet.isEmpty()) {
+                return;
+            }
         } else {
             searchService.saveSearch(request, memberId);
             searchedPet = searchService.searchPet(request, memberId);
+            if (searchedPet.isEmpty()) {
+                return;
+            }
             followerPets = followService.getFollowerPetsByMember(memberId);
             followingPets = new HashSet<>(followService.getFollowingPets(memberId));
         }

@@ -21,10 +21,11 @@ class PetServiceTest extends AbstractTest {
     @DisplayName("강아지가 정상적으로 등록된다.")
     void registerPetTest() {
         // given
-        RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
+        RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        Long memberId = 1L;
 
         // when
-        Pet pet = petService.registerPet(request);
+        Pet pet = petService.registerPet(request, memberId);
 
         // then
         assertThat(pet.getName()).isEqualTo("bona");
@@ -52,12 +53,13 @@ class PetServiceTest extends AbstractTest {
     @DisplayName("강아지 등록 시 중복체크를 진행한다.")
     void checkDuplicatedPetTest() {
         // given
-        RegisterPetRequest request1 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
-        RegisterPetRequest request2 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
+        RegisterPetRequest request1 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        RegisterPetRequest request2 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        Long memberId = 1L;
 
         // when
-        petService.registerPet(request1);
-        PetException petException = assertThrows(PetException.class, () -> petService.registerPet(request2));
+        petService.registerPet(request1, memberId);
+        PetException petException = assertThrows(PetException.class, () -> petService.checkDuplicatedPet(request2, memberId));
 
         // then
         assertEquals(PetErrorCode.DUPLICATED_PET, petException.getErrorCode());
@@ -68,10 +70,11 @@ class PetServiceTest extends AbstractTest {
     @DisplayName("강아지 존재 여부가 확인된다.")
     void findByIdTest() {
         //given
-        RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, 1L);
+        RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        Long memberId = 1L;
 
         //when
-        petService.registerPet(request);
+        petService.registerPet(request, memberId);
         Pet pet = petRepository.findById(1L).get();
         Pet targetPet = petService.findById(1L);
 

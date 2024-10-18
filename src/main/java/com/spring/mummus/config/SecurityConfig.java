@@ -35,7 +35,9 @@ public class SecurityConfig {
                         authorizeHttpRequests
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated());
+                                .requestMatchers("/image/**").permitAll()
+//                                .anyRequest().authenticated());
+                                .anyRequest().permitAll());
 
         return http.build();
     }

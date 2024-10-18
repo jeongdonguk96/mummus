@@ -18,7 +18,6 @@ import static com.spring.mummus.exception.enums.MemberErrorCode.DUPLICATED_PHONE
 public class MemberService {
 
     private final MemberRepository memberRepository;
-//    private final MemberReference memberReference;
 
 
     // 회원가입을 진행한다.

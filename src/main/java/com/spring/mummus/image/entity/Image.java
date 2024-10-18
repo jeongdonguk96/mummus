@@ -10,12 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @Entity
+@Builder
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,5 +28,18 @@ public class Image extends BaseEntity {
     private ImageDomain imageDomain;
     private Long domainId;
     private String path;
-    private Long sequence;
+    private int sequence;
+    private Long memberId;
+
+
+    public static Image from(ImageDomain imageDomain, Long domainId, String path, int sequence, Long memberId) {
+        return Image.builder()
+                .imageDomain(imageDomain)
+                .domainId(domainId)
+                .path(path)
+                .sequence(sequence)
+                .memberId(memberId)
+                .build();
+    }
+
 }

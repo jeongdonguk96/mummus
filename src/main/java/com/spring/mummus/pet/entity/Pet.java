@@ -23,6 +23,7 @@ public class Pet extends BaseEntity {
     private Gender gender;
     @Enumerated(EnumType.STRING)
     private PetType petType; // 견종
+    private String profileImageUrl;
     private int followerCount;
     private Long memberId;
 
@@ -35,4 +36,10 @@ public class Pet extends BaseEntity {
     public void decreaseFollowerCount() {
         this.followerCount -= 1;
     }
+
+
+    public void updateProfileImage(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
 }

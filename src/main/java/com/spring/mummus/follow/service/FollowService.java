@@ -71,7 +71,7 @@ public class FollowService {
     // 나를 팔로우하는 강아지들을 가져온다.
     @Transactional(readOnly = true)
     public Set<Pet> getFollowerPetsByMember(Long memberId) {
-        List<Long> myPetIds = petRepository.findMyPets(memberId);
+        List<Long> myPetIds = petRepository.findMyPetsIds(memberId);
         Set<Pet> followerPets = new HashSet<>();
         for (Long myPetId : myPetIds) {
             List<Pet> tempFollowerPets = petRepository.getFollowerPets(myPetId);
