@@ -2,13 +2,18 @@ package com.spring.mummus.pet.service;
 
 import com.spring.mummus.exception.enums.PetErrorCode;
 import com.spring.mummus.exception.exception.PetException;
+import com.spring.mummus.image.enums.ImageDomain;
+import com.spring.mummus.image.service.ImageService;
+import com.spring.mummus.image.service.S3Service;
 import com.spring.mummus.pet.dto.RegisterPetRequest;
 import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.spring.mummus.exception.enums.PetErrorCode.DUPLICATED_PET;
@@ -17,41 +22,36 @@ import static com.spring.mummus.exception.enums.PetErrorCode.DUPLICATED_PET;
 @RequiredArgsConstructor
 public class PetService {
 
+    private final S3Service s3Service;
+    private final ImageService imageService;
     private final PetRepository petRepository;
 
 
     // 강아지를 등록한다.
     @Transactional
-    public Pet registerPet(RegisterPetRequest request, Long memberId) {
-        return petRepository.save(request.toEntity(memberId));
+    public Pet createPet(RegisterPetRequest request, MultipartFile file, Long memberId) throws IOException {
+        checkDuplicatedPet(request, memberId);
+        Pet pet = petRepository.save(request.toEntity(memberId));
+        s3Service.upload(file, ImageDomain.PET, memberId);
+        String imageUrl = imageService.createImage(file, ImageDomain.PET, pet.getId(), memberId);
+        updateProfileImage(pet, imageUrl);
+
+        return pet;
     }
 
 
     // 사용자의 강아지를 조회한다.
     @Transactional
     public List<Pet> getPets(Long memberId) {
-        return petRepository.findMyPets(memberId);
-    }
+        List<Pet> myPets = petRepository.findMyPets(memberId);
 
+        if (myPets.isEmpty()) {
+            throw new PetException(PetErrorCode.MEMBER_HAS_NO_PETS);
+        }
 
-    // 강아지의 팔로워 수를 증가시킨다.
-    @Transactional
-    public void increaseFollowerCount(Pet pet) {
-        pet.increaseFollowerCount();
-    }
+        List<String> imageUrls = s3Service.getFiles(myPets);
 
-
-    // 강아지의 팔로워 수를 하락시킨다.
-    @Transactional
-    public void decreaseFollowerCount(Pet pet) {
-        pet.decreaseFollowerCount();
-    }
-
-
-    // 강아지의 프로필 사진을 등록한다.
-    @Transactional
-    public void updateProfileImage(Pet pet, String imageUrl) {
-        pet.updateProfileImage(imageUrl);
+        return myPets;
     }
 
 
@@ -64,11 +64,16 @@ public class PetService {
 
 
     // 강아지 등록 시 중복체크를 진행한다.
-    @Transactional(readOnly = true)
-    public void checkDuplicatedPet(RegisterPetRequest request, Long memberId) {
+    private void checkDuplicatedPet(RegisterPetRequest request, Long memberId) {
         if (petRepository.existsByNameAndMemberId(request.getName(), memberId)) {
             throw new PetException(DUPLICATED_PET);
         }
+    }
+
+
+    // 강아지의 프로필 사진을 등록한다.
+    private void updateProfileImage(Pet pet, String imageUrl) {
+        pet.updateProfileImage(imageUrl);
     }
 
 }

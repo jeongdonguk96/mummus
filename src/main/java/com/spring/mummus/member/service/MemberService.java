@@ -23,10 +23,7 @@ public class MemberService {
     // 회원가입을 진행한다.
     @Transactional
     public Member signUp(MemberSignUpRequest memberSignUpRequest) {
-        // 이메일 중복 체크
         checkDuplicatedEmail(memberSignUpRequest.getEmail());
-
-        // 휴대폰 번호 중복 체크
         checkDuplicatedPhoneNumber(memberSignUpRequest.getPhoneNumber());
 
         return memberRepository.save(memberSignUpRequest.toEntity());
@@ -38,6 +35,14 @@ public class MemberService {
     public Member singUp(OAuth2 oAuth2) {
         Member newMember = oAuth2.from(oAuth2);
         return memberRepository.save(newMember);
+    }
+
+
+    // 회원 존재 여부를 확인한다.
+    @Transactional(readOnly = true)
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(
+                ()-> new MemberException(MemberErrorCode.USER_NOT_FOUND));
     }
 
 
@@ -55,12 +60,4 @@ public class MemberService {
             throw new MemberException(DUPLICATED_PHONE_NUMBER);
         }
     }
-
-
-    // 회원 존재 여부를 확인한다.
-    public Member findById(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(
-                ()-> new MemberException(MemberErrorCode.USER_NOT_FOUND));
-    }
-
 }

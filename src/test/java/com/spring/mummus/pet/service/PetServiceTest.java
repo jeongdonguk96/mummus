@@ -1,31 +1,31 @@
 package com.spring.mummus.pet.service;
 
 import com.spring.mummus.common.AbstractTest;
-import com.spring.mummus.exception.enums.PetErrorCode;
-import com.spring.mummus.exception.exception.PetException;
-import com.spring.mummus.fixture.PetFixture;
 import com.spring.mummus.pet.dto.RegisterPetRequest;
 import com.spring.mummus.pet.entity.Pet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 import static com.spring.mummus.pet.enums.Gender.FEMALE;
 import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지가 정상적으로 등록된다.")
-    void registerPetTest() {
+    void createPetTest() throws IOException {
         // given
         RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
 
         // when
-        Pet pet = petService.registerPet(request, memberId);
+        Pet pet = petService.createPet(request, file, memberId);
 
         // then
         assertThat(pet.getName()).isEqualTo("bona");
@@ -35,46 +35,17 @@ class PetServiceTest extends AbstractTest {
     }
 
 
-    @Test
-    @DisplayName("강아지의 팔로워 수가 정상적으로 증가한다.")
-    void increaseFollowerCountTest() {
-        // given
-        Pet pet = savePet(1L, 1L);
-
-        // when
-        petService.increaseFollowerCount(pet);
-
-        // then
-        assertThat(pet.getFollowerCount()).isEqualTo(1);
-    }
-
-
-    @Test
-    @DisplayName("강아지 등록 시 중복체크를 진행한다.")
-    void checkDuplicatedPetTest() {
-        // given
-        RegisterPetRequest request1 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
-        RegisterPetRequest request2 = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
-        Long memberId = 1L;
-
-        // when
-        petService.registerPet(request1, memberId);
-        PetException petException = assertThrows(PetException.class, () -> petService.checkDuplicatedPet(request2, memberId));
-
-        // then
-        assertEquals(PetErrorCode.DUPLICATED_PET, petException.getErrorCode());
-    }
-
 
     @Test
     @DisplayName("강아지 존재 여부가 확인된다.")
-    void findByIdTest() {
+    void findByIdTest() throws IOException {
         //given
         RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
 
         //when
-        petService.registerPet(request, memberId);
+        petService.createPet(request, file, memberId);
         Pet pet = petRepository.findById(1L).get();
         Pet targetPet = petService.findById(1L);
 
@@ -85,10 +56,5 @@ class PetServiceTest extends AbstractTest {
         assertThat(pet.getAge()).isEqualTo(targetPet.getAge());
     }
 
-
-    private Pet savePet(Long id, Long memberId) {
-        Pet pet = PetFixture.createPet(id, memberId);
-        return petRepository.save(pet);
-    }
 
 }

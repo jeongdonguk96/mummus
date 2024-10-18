@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,32 +30,34 @@ public class FollowService {
 
     // 다른 강아지를 팔로우한다.
     @Transactional
-    public Pet followPet(FollowPetRequest request, Long memberId) {
+    public void followPet(FollowPetRequest request, Long memberId) {
         memberService.findById(memberId);
         Pet followingPet = petService.findById(request.followingPetId());
+        followingPet.increaseFollowerCount();
 
         Follow newFollow = request.from(memberId);
         followRepository.save(newFollow);
-
-        return followingPet;
     }
 
 
     // 다른 강아지를 언팔로우한다.
     @Transactional
-    public Pet unfollowPet(FollowPetRequest request, Long memberId) {
+    public void unfollowPet(FollowPetRequest request, Long memberId) {
         memberService.findById(memberId);
         Pet unfollowedPet = petService.findById(request.followingPetId());
+        unfollowedPet.decreaseFollowerCount();
 
         followRepository.deleteFollow(request.followingPetId(), memberId);
-
-        return unfollowedPet;
     }
 
 
     // 내가 팔로우하는 강아지를 조회한다.
     @Transactional(readOnly = true)
     public List<Pet> getFollowingPets(Long memberId) {
+        if (memberId == null) {
+            return Collections.emptyList();
+        }
+
         // TODO: 프론트에서 사용할 정보만 담아 DTO로 변환하여 응답
         return petRepository.getFollowingPets(memberId);
     }
@@ -71,6 +74,10 @@ public class FollowService {
     // 나를 팔로우하는 강아지들을 가져온다.
     @Transactional(readOnly = true)
     public Set<Pet> getFollowerPetsByMember(Long memberId) {
+        if (memberId == null) {
+            return Collections.emptySet();
+        }
+
         List<Long> myPetIds = petRepository.findMyPetsIds(memberId);
         Set<Pet> followerPets = new HashSet<>();
         for (Long myPetId : myPetIds) {

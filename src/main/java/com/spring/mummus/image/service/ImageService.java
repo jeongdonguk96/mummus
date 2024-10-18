@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ImageService {
 
+    private final S3Service s3Service;
     private final ImageRepository imageRepository;
 
 
@@ -36,7 +38,7 @@ public class ImageService {
 
     // 다중 파일을 저장한다.
     @Transactional
-    public void createImage(List<MultipartFile> files, ImageDomain domain, Long domainId, Long memberId) {
+    public void createImage(List<MultipartFile> files, ImageDomain domain, Long domainId, Long memberId) throws IOException {
         List<Image> images = new ArrayList<>();
 
         for (int i = 0; i < files.size(); i++) {
@@ -46,6 +48,7 @@ public class ImageService {
         }
 
         imageRepository.saveAll(images);
+        s3Service.upload(files, domain, memberId);
     }
 
 
