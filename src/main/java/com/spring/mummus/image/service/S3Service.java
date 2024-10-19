@@ -30,10 +30,12 @@ public class S3Service {
 
     // 단일 파일을 S3에 업로드한다.
     @Transactional
-    public void upload(MultipartFile file, ImageDomain domain, Long memberId) throws IOException {
+    public String upload(MultipartFile file, ImageDomain domain, Long memberId) throws IOException {
         String filename = extractFilename(domain, memberId, file);
         ObjectMetadata metadata = setObjectMetadata(file);
         amazonS3Client.putObject(BUCKET, filename, file.getInputStream(), metadata);
+
+        return filename;
     }
 
 
@@ -55,7 +57,7 @@ public class S3Service {
         List<String> imageUrls = new ArrayList<>();
 
         for (Pet pet : pets) {
-            String imageUrl = amazonS3Client.getObject(BUCKET, pet.getProfileImageUrl()).toString();
+            String imageUrl = String.valueOf(amazonS3Client.getObject(BUCKET, pet.getProfileImageUrl()));
             imageUrls.add(imageUrl);
         }
 

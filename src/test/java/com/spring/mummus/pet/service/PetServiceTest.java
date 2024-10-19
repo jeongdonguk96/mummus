@@ -1,7 +1,7 @@
 package com.spring.mummus.pet.service;
 
 import com.spring.mummus.common.AbstractTest;
-import com.spring.mummus.pet.dto.RegisterPetRequest;
+import com.spring.mummus.pet.dto.CreatePetRequest;
 import com.spring.mummus.pet.entity.Pet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class PetServiceTest extends AbstractTest {
     @DisplayName("강아지가 정상적으로 등록된다.")
     void createPetTest() throws IOException {
         // given
-        RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
         MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
 
@@ -40,7 +40,7 @@ class PetServiceTest extends AbstractTest {
     @DisplayName("강아지 존재 여부가 확인된다.")
     void findByIdTest() throws IOException {
         //given
-        RegisterPetRequest request = new RegisterPetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
         MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
 

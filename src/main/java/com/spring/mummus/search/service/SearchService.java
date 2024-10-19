@@ -34,8 +34,8 @@ public class SearchService {
     public List<Pet> searchPet(SearchRequest request, Long memberId) {
         saveSearch(request, memberId);
         List<Pet> searchedPet = petRepository.searchPets(request.keyword(), memberId);
-        Set<Pet> followerPets = followService.getFollowerPetsByMember(memberId);
-        Set<Pet> followingPets = new HashSet<>(followService.getFollowingPets(memberId));
+        Set<Pet> followerPets = (memberId != null) ? followService.getFollowerPetsByMember(memberId) : Collections.emptySet();
+        Set<Pet> followingPets = (memberId != null) ? new HashSet<>(followService.getFollowingPets(memberId)) : Collections.emptySet();
 
         return sortOrder(searchedPet, followingPets, followerPets);
     }
@@ -43,12 +43,9 @@ public class SearchService {
 
     // 우선 순위를 정해 걸색 결과를 정렬한다.
     private List<Pet> sortOrder(List<Pet> searchedPets, Set<Pet> followerPets, Set<Pet> followingPets) {
-        Set<Pet> nullCheckedFollowerPets = followerPets != null ? followerPets : Collections.emptySet();
-        Set<Pet> nullCheckedFollowingPets = followingPets != null ? followingPets : Collections.emptySet();
-
         return searchedPets.stream()
                 .sorted(Comparator
-                        .comparing((Pet pet) -> nullCheckedFollowerPets.contains(pet) ||  nullCheckedFollowingPets.contains(pet))
+                        .comparing((Pet pet) -> followerPets.contains(pet) ||  followingPets.contains(pet))
                         .thenComparing(Pet::getFollowerCount).reversed()
                 )
                 .toList();
