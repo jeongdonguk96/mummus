@@ -1,7 +1,9 @@
 package com.spring.mummus.pet.service;
 
 import com.spring.mummus.common.AbstractTest;
+import com.spring.mummus.fixture.PetFixture;
 import com.spring.mummus.pet.dto.CreatePetRequest;
+import com.spring.mummus.pet.dto.GetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.spring.mummus.pet.enums.Gender.FEMALE;
 import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
@@ -35,6 +38,25 @@ class PetServiceTest extends AbstractTest {
     }
 
 
+    @Test
+    @DisplayName("강아지가 정상적으로 조회된다.")
+    void getMyPetsTest() {
+        // given
+        savePet(1L, 11L, "보나", "test.com/url1");
+        savePet(2L, 11L, "핑키", "test.com/url2");
+
+        // when
+        List<GetMyPetsResponse> myPets = petService.getMyPets(11L);
+
+        // then
+        assertThat(myPets.get(0).name()).isEqualTo("보나");
+        assertThat(myPets.get(0).profileImageUrl()).isEqualTo("test.com/url1");
+
+        assertThat(myPets.get(1).name()).isEqualTo("핑키");
+        assertThat(myPets.get(1).profileImageUrl()).isEqualTo("test.com/url2");
+    }
+
+
 
     @Test
     @DisplayName("강아지 존재 여부가 확인된다.")
@@ -56,5 +78,10 @@ class PetServiceTest extends AbstractTest {
         assertThat(pet.getAge()).isEqualTo(targetPet.getAge());
     }
 
+
+    private Pet savePet(Long id, Long memberId, String name, String profileImageUrl) {
+        Pet pet = PetFixture.createPet(id, memberId, name, profileImageUrl);
+        return petRepository.save(pet);
+    }
 
 }
