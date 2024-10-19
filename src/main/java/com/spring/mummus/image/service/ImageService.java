@@ -7,6 +7,7 @@ import com.spring.mummus.utils.CommonUtils;
 import com.spring.mummus.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,13 +24,14 @@ public class ImageService {
     private final S3Service s3Service;
     private final ImageRepository imageRepository;
 
+    @Value("https://${cloud.aws.s3.bucket}.s3.ap-northeast-2.amazonaws.com/")
+    private String S3_URL;
+
 
     // 단일 파일을 저장한다.
     @Transactional
-    public String createImage(MultipartFile file, ImageDomain domain, Long domainId, Long memberId) {
-        String filename = extractFilename(domain, memberId, file);
-        Image image = Image.from(domain, domainId, filename, 1, memberId);
-
+    public String createImages(String filename, ImageDomain domain, Long domainId, Long memberId) {
+        Image image = Image.from(domain, domainId, S3_URL + filename, 1, memberId);
         imageRepository.save(image);
 
         return image.getPath();
@@ -38,7 +40,7 @@ public class ImageService {
 
     // 다중 파일을 저장한다.
     @Transactional
-    public void createImage(List<MultipartFile> files, ImageDomain domain, Long domainId, Long memberId) throws IOException {
+    public void createImages(List<MultipartFile> files, ImageDomain domain, Long domainId, Long memberId) throws IOException {
         List<Image> images = new ArrayList<>();
 
         for (int i = 0; i < files.size(); i++) {

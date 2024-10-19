@@ -36,12 +36,12 @@ class SearchServiceTest extends AbstractTest {
         member1 = saveMember(1L);
         member2 = saveMember(2L);
         member3 = saveMember(3L);
-        pet1 = savePet(1L, 1L, "일번이");
-        pet2 = savePet(2L, 1L, "이번이");
-        pet3 = savePet(3L, 2L, "삼번이");
-        pet4 = savePet(4L, 2L, "사번이");
-        pet5 = savePet(5L, 3L, "오번이");
-        pet6 = savePet(6L, 3L, "육번이");
+        pet1 = savePet(1L, 1L, "일번이", "test.com/url");
+        pet2 = savePet(2L, 1L, "이번이", "test.com/url");
+        pet3 = savePet(3L, 2L, "삼번이", "test.com/url");
+        pet4 = savePet(4L, 2L, "사번이", "test.com/url");
+        pet5 = savePet(5L, 3L, "오번이", "test.com/url");
+        pet6 = savePet(6L, 3L, "육번이", "test.com/url");
         saveFollow(1L, 5L);
         saveFollow(1L, 6L);
     }
@@ -113,8 +113,8 @@ class SearchServiceTest extends AbstractTest {
     }
 
 
-    private Pet savePet(Long id, Long memberId, String name) {
-        Pet pet = PetFixture.createPet(id, memberId, name);
+    private Pet savePet(Long id, Long memberId, String name, String profileImageUrl) {
+        Pet pet = PetFixture.createPet(id, memberId, name, profileImageUrl);
         return petRepository.save(pet);
     }
 

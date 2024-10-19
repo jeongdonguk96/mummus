@@ -22,11 +22,12 @@ public class PetFixture {
     }
 
 
-    public static Pet createPet(Long id, Long memberId, String name) {
+    public static Pet createPet(Long id, Long memberId, String name, String profileImageUrl) {
         return Pet.builder()
                 .id(id)
                 .memberId(memberId)
                 .name(name)
+                .profileImageUrl(profileImageUrl)
                 .build();
     }
 
