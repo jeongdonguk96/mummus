@@ -1,10 +1,13 @@
 package com.spring.mummus.pet.service;
 
 import com.spring.mummus.common.AbstractTest;
+import com.spring.mummus.exception.enums.PetErrorCode;
+import com.spring.mummus.exception.exception.PetException;
 import com.spring.mummus.fixture.PetFixture;
 import com.spring.mummus.pet.dto.CreatePetRequest;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
@@ -16,6 +19,7 @@ import java.util.List;
 import static com.spring.mummus.pet.enums.Gender.FEMALE;
 import static com.spring.mummus.pet.enums.PetType.JINDO_DOG;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PetServiceTest extends AbstractTest {
 
@@ -76,6 +80,25 @@ class PetServiceTest extends AbstractTest {
         assertThat(pet.getId()).isEqualTo(targetPet.getId());
         assertThat(pet.getName()).isEqualTo(targetPet.getName());
         assertThat(pet.getAge()).isEqualTo(targetPet.getAge());
+    }
+
+
+    @Test
+    @DisplayName("중복된 강아지를 체크한다.")
+    void checkDuplicatedPetTest() throws IOException {
+        //given
+        CreatePetRequest request1 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        CreatePetRequest request2 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
+        Long memberId = 1L;
+
+        //when
+        petService.createPet(request1, file, memberId);
+        PetException petException = Assertions.assertThrows(PetException.class, () -> petService.createPet(request1, file, memberId));
+
+
+        //then
+        assertEquals(PetErrorCode.DUPLICATED_PET, petException.getErrorCode());
     }
 
 

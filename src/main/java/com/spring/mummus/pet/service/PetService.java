@@ -34,7 +34,7 @@ public class PetService {
         checkDuplicatedPet(request, memberId);
         Pet pet = petRepository.save(request.from(memberId));
         String filename = s3Service.upload(file, ImageDomain.PET, memberId);
-        String imageUrl = imageService.createImages(filename, ImageDomain.PET, pet.getId(), memberId);
+        String imageUrl = imageService.createImage(filename, ImageDomain.PET, pet.getId(), memberId);
         pet.updateProfileImage(imageUrl);
 
         return pet;
