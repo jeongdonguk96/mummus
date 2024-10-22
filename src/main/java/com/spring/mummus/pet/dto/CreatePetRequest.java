@@ -9,7 +9,8 @@ public record CreatePetRequest(
         int age,
         String birth,
         Gender gender,
-        PetType petType
+        PetType petType,
+        String profileImageUrl
 ) {
 
     public Pet from(Long memberId) {
@@ -19,6 +20,7 @@ public record CreatePetRequest(
                 .birth(this.birth)
                 .gender(this.gender)
                 .petType(this.petType)
+                .profileImageUrl(this.profileImageUrl)
                 .memberId(memberId)
                 .build();
     }

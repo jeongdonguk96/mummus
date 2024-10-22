@@ -29,7 +29,6 @@ public class S3Service {
 
 
     // 단일 파일을 S3에 업로드한다.
-    @Transactional
     public String upload(MultipartFile file, ImageDomain domain, Long memberId) throws IOException {
         String filename = extractFilename(domain, memberId, file);
         ObjectMetadata metadata = setObjectMetadata(file);
@@ -40,7 +39,6 @@ public class S3Service {
 
 
     // 다중 파일을 S3에 업로드한다.
-    @Transactional
     public void upload(List<MultipartFile> files, ImageDomain domain, Long memberId) throws IOException {
         for (MultipartFile file : files) {
             String filename = extractFilename(domain, memberId, file);
@@ -66,9 +64,9 @@ public class S3Service {
 
 
     // 파일명을 재조합한다.
-    private String extractFilename(ImageDomain domain, Long memberId, MultipartFile files) {
+    private String extractFilename(ImageDomain domain, Long memberId, MultipartFile file) {
         String fullCurrentMonth = DateUtils.getFullCurrentMonth();
-        String originalFilename = files.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();
         String randomNumber = CommonUtils.generate3RandomNumber();
 
         return String.format("%d/%s/%s/%s-%s", memberId, domain, fullCurrentMonth, originalFilename, randomNumber);

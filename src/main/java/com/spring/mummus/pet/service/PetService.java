@@ -2,9 +2,7 @@ package com.spring.mummus.pet.service;
 
 import com.spring.mummus.exception.enums.PetErrorCode;
 import com.spring.mummus.exception.exception.PetException;
-import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.image.service.ImageService;
-import com.spring.mummus.image.service.S3Service;
 import com.spring.mummus.pet.dto.CreatePetRequest;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
@@ -12,9 +10,7 @@ import com.spring.mummus.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.spring.mummus.exception.enums.PetErrorCode.DUPLICATED_PET;
@@ -23,19 +19,16 @@ import static com.spring.mummus.exception.enums.PetErrorCode.DUPLICATED_PET;
 @RequiredArgsConstructor
 public class PetService {
 
-    private final S3Service s3Service;
     private final ImageService imageService;
     private final PetRepository petRepository;
 
 
     // 강아지를 등록한다.
     @Transactional
-    public Pet createPet(CreatePetRequest request, MultipartFile file, Long memberId) throws IOException {
+    public Pet createPet(CreatePetRequest request, Long memberId) {
         checkDuplicatedPet(request, memberId);
         Pet pet = petRepository.save(request.from(memberId));
-        String filename = s3Service.upload(file, ImageDomain.PET, memberId);
-        String imageUrl = imageService.createImage(filename, ImageDomain.PET, pet.getId(), memberId);
-        pet.updateProfileImage(imageUrl);
+        imageService.modifyDomainId(pet);
 
         return pet;
     }
