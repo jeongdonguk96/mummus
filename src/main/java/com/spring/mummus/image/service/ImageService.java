@@ -30,7 +30,7 @@ public class ImageService {
 
     // 단일 파일을 저장한다.
     @Transactional
-    public String createImages(String filename, ImageDomain domain, Long domainId, Long memberId) {
+    public String createImage(String filename, ImageDomain domain, Long domainId, Long memberId) {
         Image image = Image.from(domain, domainId, S3_URL + filename, 1, memberId);
         imageRepository.save(image);
 

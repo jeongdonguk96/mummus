@@ -2,6 +2,8 @@ package com.spring.mummus.common;
 
 import com.spring.mummus.follow.repository.FollowRepository;
 import com.spring.mummus.follow.service.FollowService;
+import com.spring.mummus.image.repository.ImageRepository;
+import com.spring.mummus.image.service.ImageService;
 import com.spring.mummus.member.repository.MemberRepository;
 import com.spring.mummus.member.service.MemberService;
 import com.spring.mummus.pet.repository.PetRepository;
@@ -28,10 +30,12 @@ public abstract class AbstractTest implements InitializingBean {
     @Autowired EntityManager em;
 
     @Autowired public PetService petService;
+    @Autowired public ImageService imageService;
     @Autowired public MemberService memberService;
     @Autowired public FollowService followService;
     @Autowired public SearchService searchService;
     @Autowired public PetRepository petRepository;
+    @Autowired public ImageRepository imageRepository;
     @Autowired public MemberRepository memberRepository;
     @Autowired public FollowRepository followRepository;
     @Autowired public SearchRepository searchRepository;

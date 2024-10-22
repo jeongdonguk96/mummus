@@ -49,7 +49,7 @@ class SearchServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지가 정상적으로 검색된다.")
-    void searchPetTest() {
+    void searchPetTest1() {
         // given
         SearchRequest request1 = new SearchRequest("번");
         SearchRequest request2 = new SearchRequest("오번");
@@ -66,7 +66,7 @@ class SearchServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("로그인한 사람이 검색할 경우 우선 순위를 정해 걸색 결과가 정렬된다. ")
-    void sortOrderTest1() {
+    void searchPetTest2() {
         // given
         SearchRequest request = new SearchRequest("번");
         pet4.increaseFollowerCount();
@@ -85,7 +85,7 @@ class SearchServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("로그인하지 않은 사람이 검색할 경우 우선 순위를 정해 걸색 결과가 정렬된다. ")
-    void sortOrderTest2() {
+    void searchPetTest3() {
         // given
         SearchRequest request = new SearchRequest("번");
         pet4.increaseFollowerCount();
