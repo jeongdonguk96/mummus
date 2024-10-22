@@ -4,16 +4,14 @@ import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.exception.enums.PetErrorCode;
 import com.spring.mummus.exception.exception.PetException;
 import com.spring.mummus.fixture.PetFixture;
+import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.pet.dto.CreatePetRequest;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.spring.mummus.pet.enums.Gender.FEMALE;
@@ -25,14 +23,14 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지가 정상적으로 등록된다.")
-    void createPetTest() throws IOException {
+    void createPetTest() {
         // given
-        CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
-        MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
+        String profileImageUrl = imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
 
         // when
-        Pet pet = petService.createPet(request, file, memberId);
+        Pet pet = petService.createPet(request, memberId);
 
         // then
         assertThat(pet.getName()).isEqualTo("bona");
@@ -64,14 +62,15 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지 존재 여부가 확인된다.")
-    void findByIdTest() throws IOException {
+    void findByIdTest() {
         //given
-        CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
-        MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
+        String profileImageUrl = imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
+        imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
 
         //when
-        petService.createPet(request, file, memberId);
+        petService.createPet(request, memberId);
         Pet pet = petRepository.findById(1L).get();
         Pet targetPet = petService.findById(1L);
 
@@ -85,16 +84,17 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("중복된 강아지를 체크한다.")
-    void checkDuplicatedPetTest() throws IOException {
+    void checkDuplicatedPetTest() {
         //given
-        CreatePetRequest request1 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
-        CreatePetRequest request2 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG);
-        MultipartFile file = new MockMultipartFile("file", new byte[1]);
         Long memberId = 1L;
+        String profileImageUrl = imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        CreatePetRequest request1 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
+        CreatePetRequest request2 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
+        imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
 
         //when
-        petService.createPet(request1, file, memberId);
-        PetException petException = Assertions.assertThrows(PetException.class, () -> petService.createPet(request1, file, memberId));
+        petService.createPet(request1, memberId);
+        PetException petException = Assertions.assertThrows(PetException.class, () -> petService.createPet(request2, memberId));
 
 
         //then

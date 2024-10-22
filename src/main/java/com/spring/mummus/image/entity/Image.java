@@ -42,4 +42,18 @@ public class Image extends BaseEntity {
                 .build();
     }
 
+
+    public static Image from(ImageDomain imageDomain, String path, int sequence, Long memberId) {
+        return Image.builder()
+                .imageDomain(imageDomain)
+                .path(path)
+                .sequence(sequence)
+                .memberId(memberId)
+                .build();
+    }
+
+
+    public void modifyDomainId(Long domainId) {
+        this.domainId = domainId;
+    }
 }

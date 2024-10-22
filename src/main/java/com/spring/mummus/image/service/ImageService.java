@@ -3,6 +3,7 @@ package com.spring.mummus.image.service;
 import com.spring.mummus.image.entity.Image;
 import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.image.repository.ImageRepository;
+import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.utils.CommonUtils;
 import com.spring.mummus.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,19 @@ public class ImageService {
 
     // 단일 파일을 저장한다.
     @Transactional
-    public String createImage(String filename, ImageDomain domain, Long domainId, Long memberId) {
-        Image image = Image.from(domain, domainId, S3_URL + filename, 1, memberId);
+    public String createImage(String filename, ImageDomain domain, Long memberId) {
+        Image image = Image.from(domain, S3_URL + filename, 1, memberId);
         imageRepository.save(image);
 
         return image.getPath();
+    }
+
+
+    // 이미지 데이터의 domainId를 수정한다.
+    @Transactional
+    public void modifyDomainId(Pet pet) {
+        Image image = imageRepository.getImage(pet.getProfileImageUrl());
+        image.modifyDomainId(pet.getId());
     }
 
 
