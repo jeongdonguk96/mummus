@@ -4,4 +4,6 @@ import com.spring.mummus.image.entity.Image;
 
 public interface ImageRepositoryQuerydsl {
     Image getImage(String path);
+
+    void deleteImage(String path);
 }

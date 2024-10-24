@@ -1,5 +1,6 @@
 package com.spring.mummus.image.service;
 
+import com.spring.mummus.image.dto.DeleteImageRequest;
 import com.spring.mummus.image.entity.Image;
 import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.image.repository.ImageRepository;
@@ -31,11 +32,21 @@ public class ImageService {
 
     // 단일 파일을 저장한다.
     @Transactional
-    public String createImage(String filename, ImageDomain domain, Long memberId) {
-        Image image = Image.from(domain, S3_URL + filename, 1, memberId);
+    public String createImage(MultipartFile file, ImageDomain domain, Long memberId) throws IOException {
+        String fileName = s3Service.upload(file, ImageDomain.PET, memberId);
+        Image image = Image.from(domain, S3_URL + fileName, 1, memberId);
         imageRepository.save(image);
 
         return image.getPath();
+    }
+
+
+    // 단일 파일을 삭제한다.
+    @Transactional
+    public void deleteImage(DeleteImageRequest request) {
+        String fileNameForS3 = request.profileImageUrl().replace(S3_URL, "");
+        s3Service.delete(fileNameForS3);
+        imageRepository.deleteImage(request.profileImageUrl());
     }
 
 
