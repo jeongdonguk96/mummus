@@ -18,4 +18,13 @@ public class ImageRepositoryQuerydslImpl implements ImageRepositoryQuerydsl {
                 .where(image.path.eq(path))
                 .fetchFirst();
     }
+
+    @Override
+    public void deleteImage(String path) {
+        queryFactory
+                .delete(image)
+                .where(image.path.eq(path))
+                .execute();
+    }
+
 }

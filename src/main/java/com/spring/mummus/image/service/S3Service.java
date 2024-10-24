@@ -30,11 +30,17 @@ public class S3Service {
 
     // 단일 파일을 S3에 업로드한다.
     public String upload(MultipartFile file, ImageDomain domain, Long memberId) throws IOException {
-        String filename = extractFilename(domain, memberId, file);
+        String fileName = extractFilename(domain, memberId, file);
         ObjectMetadata metadata = setObjectMetadata(file);
-        amazonS3Client.putObject(BUCKET, filename, file.getInputStream(), metadata);
+        amazonS3Client.putObject(BUCKET, fileName, file.getInputStream(), metadata);
 
-        return filename;
+        return fileName;
+    }
+
+
+    // S3에 있는 단일 파일을 삭제한다.
+    public void delete(String fileName) {
+        amazonS3Client.deleteObject(BUCKET, fileName);
     }
 
 

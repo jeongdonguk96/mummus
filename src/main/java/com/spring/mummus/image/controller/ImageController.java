@@ -1,11 +1,13 @@
 package com.spring.mummus.image.controller;
 
+import com.spring.mummus.image.dto.DeleteImageRequest;
 import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.image.service.ImageService;
-import com.spring.mummus.image.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +20,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImageController {
 
-    private final S3Service s3Service;
     private final ImageService imageService;
 
 
@@ -26,9 +27,14 @@ public class ImageController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String createImage(@RequestPart(name = "file") MultipartFile file) throws IOException {
         Long memberId = 1L;
+        return imageService.createImage(file, ImageDomain.PET, memberId);
+    }
 
-        String filename = s3Service.upload(file, ImageDomain.PET, memberId);
-        return imageService.createImage(filename, ImageDomain.PET, memberId);
+
+    // S3에 있는 이미지 파일을 삭제하고 DB에서 이미지 데이터를 삭제한다.
+    @DeleteMapping()
+    public void deleteImage(@RequestBody DeleteImageRequest request) {
+        imageService.deleteImage(request);
     }
 
 }

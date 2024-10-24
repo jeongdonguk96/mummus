@@ -11,7 +11,10 @@ import com.spring.mummus.pet.entity.Pet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.spring.mummus.pet.enums.Gender.FEMALE;
@@ -23,10 +26,11 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지가 정상적으로 등록된다.")
-    void createPetTest() {
+    void createPetTest() throws IOException {
         // given
         Long memberId = 1L;
-        String profileImageUrl = imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
+        String profileImageUrl = imageService.createImage(file, ImageDomain.PET, memberId);
         CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
 
         // when
@@ -62,12 +66,13 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("강아지 존재 여부가 확인된다.")
-    void findByIdTest() {
+    void findByIdTest() throws IOException {
         //given
         Long memberId = 1L;
-        String profileImageUrl = imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
+        String profileImageUrl = imageService.createImage(file, ImageDomain.PET, memberId);
         CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
-        imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        imageService.createImage(file, ImageDomain.PET, memberId);
 
         //when
         petService.createPet(request, memberId);
@@ -84,13 +89,14 @@ class PetServiceTest extends AbstractTest {
 
     @Test
     @DisplayName("중복된 강아지를 체크한다.")
-    void checkDuplicatedPetTest() {
+    void checkDuplicatedPetTest() throws IOException {
         //given
         Long memberId = 1L;
-        String profileImageUrl = imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
+        String profileImageUrl = imageService.createImage(file, ImageDomain.PET, memberId);
         CreatePetRequest request1 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
         CreatePetRequest request2 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
-        imageService.createImage("1/202410/PET/test.png", ImageDomain.PET, memberId);
+        imageService.createImage(file, ImageDomain.PET, memberId);
 
         //when
         petService.createPet(request1, memberId);
