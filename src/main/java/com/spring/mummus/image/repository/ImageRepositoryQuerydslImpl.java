@@ -20,10 +20,11 @@ public class ImageRepositoryQuerydslImpl implements ImageRepositoryQuerydsl {
     }
 
     @Override
-    public void deleteImage(String path) {
+    public void deleteImage(String path, Long petId) {
         queryFactory
                 .delete(image)
-                .where(image.path.eq(path))
+                .where(image.domainId.eq(petId)
+                        .and(image.path.eq(path)))
                 .execute();
     }
 

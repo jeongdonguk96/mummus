@@ -1,6 +1,7 @@
 package com.spring.mummus.image.service;
 
 import com.spring.mummus.common.AbstractTest;
+import com.spring.mummus.fixture.PetFixture;
 import com.spring.mummus.image.dto.DeleteImageRequest;
 import com.spring.mummus.image.entity.Image;
 import com.spring.mummus.image.enums.ImageDomain;
@@ -44,6 +45,37 @@ class ImageServiceTest extends AbstractTest {
 
 
     @Test
+    @DisplayName("단일 이미지가 정상적으로 수정된다.")
+    void modifyImageTest() throws IOException {
+        // given
+        Long memberId = 1L;
+        MultipartFile file = new MockMultipartFile("file", new byte[1]);
+        ImageDomain domain = ImageDomain.PET;
+        String fileName = imageService.createImage(file, domain, memberId);
+        Pet pet = savePet(1L, memberId, "Bona", fileName);
+        imageService.modifyDomainId(pet);
+        System.out.println("fileName = " + fileName);
+        System.out.println("pet = " + pet);
+
+        MultipartFile newFile = new MockMultipartFile("file", new byte[1]);
+
+        // when
+        String newFileName = imageService.modifyImage(newFile, ImageDomain.PET, pet.getId(), memberId);
+        List<Image> images = imageRepository.findAll();
+        List<Pet> pets = petRepository.findAll();
+        System.out.println("newFileName = " + newFileName);
+        System.out.println("images.get(0) = " + images.get(0));
+        System.out.println("pets.get(0) = " + pets.get(0));
+
+        // then
+        assertThat(images).hasSize(1);
+        assertThat(images.get(0).getPath()).isNotEqualTo(fileName);
+        assertThat(images.get(0).getPath()).isEqualTo(newFileName);
+        assertThat(pets.get(0).getProfileImageUrl()).isEqualTo(newFileName);
+    }
+
+
+    @Test
     @DisplayName("단일 이미지가 정상적으로 삭제된다.")
     void deleteImageTest() throws IOException {
         // given
@@ -52,10 +84,12 @@ class ImageServiceTest extends AbstractTest {
         ImageDomain domain = ImageDomain.PET;
         String fileName = imageService.createImage(file, domain, memberId);
         DeleteImageRequest request = new DeleteImageRequest(fileName);
+        Pet pet = savePet(1L, memberId, "Bona", fileName);
+        imageService.modifyDomainId(pet);
 
         // when
         List<Image> images1 = imageRepository.findAll();
-        imageService.deleteImage(request);
+        imageService.deleteImage(request, pet.getId());
         List<Image> images2 = imageRepository.findAll();
 
         // then
@@ -82,6 +116,12 @@ class ImageServiceTest extends AbstractTest {
 
         // then
         assertThat(image.getDomainId()).isEqualTo(pet.getId());
+    }
+
+
+    private Pet savePet(Long id, Long memberId, String name, String profileImageUrl) {
+        Pet pet = PetFixture.createPet(id, memberId, name, profileImageUrl);
+        return petRepository.save(pet);
     }
 
 }
