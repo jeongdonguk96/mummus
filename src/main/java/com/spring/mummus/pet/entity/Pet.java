@@ -36,4 +36,9 @@ public class Pet extends BaseEntity {
     public void decreaseFollowerCount() {
         this.followerCount -= 1;
     }
+
+
+    public void modifyProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 }
