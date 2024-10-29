@@ -48,7 +48,7 @@ public class ImageService {
 
     // 단일 파일을 수정한다.
     @Transactional
-    public String modifyImage(MultipartFile file, ImageDomain domain, @PathVariable Long petId, Long memberId) throws IOException {
+    public String modifyProfileImage(MultipartFile file, ImageDomain domain, @PathVariable Long petId, Long memberId) throws IOException {
         Pet pet = petRepository.findById(petId).orElseThrow(
                 () -> new PetException(PetErrorCode.PET_NOT_FOUND));
 

@@ -11,4 +11,5 @@ public interface PetRepositoryQuerydsl {
     List<Pet> searchPets(String keyword, Long memberId);
     List<Pet> getFollowingPets(Long memberId);
     List<Pet> getFollowerPets(Long petId);
+    void deletePet(Long petId);
 }

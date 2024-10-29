@@ -60,7 +60,7 @@ class ImageServiceTest extends AbstractTest {
         MultipartFile newFile = new MockMultipartFile("file", new byte[1]);
 
         // when
-        String newFileName = imageService.modifyImage(newFile, ImageDomain.PET, pet.getId(), memberId);
+        String newFileName = imageService.modifyProfileImage(newFile, ImageDomain.PET, pet.getId(), memberId);
         List<Image> images = imageRepository.findAll();
         List<Pet> pets = petRepository.findAll();
         System.out.println("newFileName = " + newFileName);

@@ -34,12 +34,12 @@ public class ImageController {
 
     // S3에 기존 이미지 파일을 삭제하고 새로운 파일을 업로드하고 DB에도 기존 이미지 파일을 삭제하고 새로운 이미지 데이터를 생성한다.
     @PostMapping(value = "/{petId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void modifyImage(
+    public void modifyProfileImage(
             @RequestPart(name = "file") MultipartFile file,
             @PathVariable Long petId
     ) throws IOException {
         Long memberId = 1L;
-        imageService.modifyImage(file, ImageDomain.PET, petId, memberId);
+        imageService.modifyProfileImage(file, ImageDomain.PET, petId, memberId);
     }
 
 

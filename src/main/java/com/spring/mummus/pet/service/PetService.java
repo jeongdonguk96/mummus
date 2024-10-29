@@ -34,6 +34,14 @@ public class PetService {
     }
 
 
+    // 다른 강아지를 조회한다.
+    @Transactional
+    public Pet getPet(Long petId) {
+        return petRepository.findById(petId).orElseThrow(
+                () -> new PetException(PetErrorCode.PET_NOT_FOUND));
+    }
+
+
     // 사용자의 강아지를 조회한다.
     @Transactional
     public List<GetMyPetsResponse> getMyPets(Long memberId) {
@@ -44,6 +52,13 @@ public class PetService {
         }
 
         return myPets;
+    }
+
+
+    // 강아지를 삭제한다.
+    @Transactional
+    public void deletePet(Long petId) {
+        petRepository.deletePet(petId);
     }
 
 
