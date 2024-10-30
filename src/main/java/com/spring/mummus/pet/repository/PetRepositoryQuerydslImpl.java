@@ -2,7 +2,6 @@ package com.spring.mummus.pet.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
-import com.spring.mummus.pet.dto.QGetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
 import lombok.RequiredArgsConstructor;
 
@@ -74,6 +73,14 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
                 .join(pet).on(pet.memberId.eq(follow.followerMemberId))
                 .where(follow.followingPetId.eq(petId))
                 .fetch();
+    }
+
+    @Override
+    public void deletePet(Long petId) {
+        queryFactory
+                .delete(pet)
+                .where(pet.id.eq(petId))
+                .execute();
     }
 
 }

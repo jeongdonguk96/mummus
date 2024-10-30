@@ -2,9 +2,12 @@ package com.spring.mummus.pet.controller;
 
 import com.spring.mummus.pet.dto.CreatePetRequest;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
+import com.spring.mummus.pet.entity.Pet;
 import com.spring.mummus.pet.service.PetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +32,26 @@ public class PetController {
     }
 
 
+    // 다른 강아지를 조회한다.
+    @GetMapping("/{petId}")
+    public Pet getPet(@PathVariable(name = "petId") Long petId) {
+        return petService.getPet(petId);
+    }
+
+
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 사용자의 강아지를 조회한다.
     @GetMapping("/my-pets")
     public List<GetMyPetsResponse> getMyPets() {
         Long memberId = 1L;
         return petService.getMyPets(memberId);
+    }
+
+
+    // 강아지를 삭제한다.
+    @DeleteMapping("/{petId}")
+    public void deletePet(@PathVariable(name = "petId") Long petId) {
+        petService.deletePet(petId);
     }
 
 }
