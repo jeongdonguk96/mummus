@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566" # 모든 서비스의 엣지 포트
+    environment:
+      - SERVICES=s3  # AWS 서비스 중 S3만 활성화
+      - DEBUG=1  # 디버그 모드 활성화
+      - DATA_DIR=/tmp/localstack/data  # 컨테이너 내 데이터 디렉토리
+      - AWS_ACCESS_KEY_ID=localstack-access-key  # LocalStack에서 사용할 가상의 AWS 액세스 키
+      - AWS_SECRET_ACCESS_KEY=localstack-secret-key  # LocalStack에서 사용할 가상의 AWS 시크릿 키
+      - AWS_REGION=us-east-1  # AWS 리전

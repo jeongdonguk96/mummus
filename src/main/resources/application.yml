@@ -35,18 +35,18 @@ spring:
           kakao:
             client-id:
             client-secret:
-            client-authentication-method: client_secret_post
+            client-authentication-method:
             redirect-uri:
-            authorization-grant-type: authorization_code
-            client-name: Kakao
+            authorization-grant-type:
+            client-name:
             scope:
               - profile_nickname
               - account_email
         provider:
           kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token-uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
+            authorization-uri:
+            token-uri:
+            user-info-uri:
             user-name-attribute: id
   servlet:
     multipart:
@@ -58,8 +58,69 @@ cloud:
     s3:
       bucket:
     region:
-      static: ap-northeast-2
+      static:
       auto: false
+    stack:
+      auto: false
+    credentials:
+      access-key:
+      secret-key:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url:
+    username:
+    password:
+    minimum-idle: 10
+    maximum-pool-size: 10
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id:
+            client-secret:
+            client-authentication-method:
+            redirect-uri:
+            authorization-grant-type:
+            client-name:
+            scope:
+              - profile_nickname
+              - account_email
+        provider:
+          kakao:
+            authorization-uri:
+            token-uri:
+            user-info-uri:
+            user-name-attribute:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+cloud:
+  aws:
+    s3:
+      bucket:
+    region:
+      static: us-east-1
     stack:
       auto: false
     credentials:

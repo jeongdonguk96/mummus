@@ -35,7 +35,6 @@ class ImageServiceTest extends AbstractTest {
 
         // when
         String fileName = imageService.createImage(file, domain, memberId);
-        System.out.println("fileName = " + fileName);
         List<Image> images = imageRepository.findAll();
 
         // then
@@ -54,8 +53,6 @@ class ImageServiceTest extends AbstractTest {
         String fileName = imageService.createImage(file, domain, memberId);
         Pet pet = savePet(1L, memberId, "Bona", fileName);
         imageService.modifyDomainId(pet);
-        System.out.println("fileName = " + fileName);
-        System.out.println("pet = " + pet);
 
         MultipartFile newFile = new MockMultipartFile("file", new byte[1]);
 
@@ -63,9 +60,6 @@ class ImageServiceTest extends AbstractTest {
         String newFileName = imageService.modifyProfileImage(newFile, ImageDomain.PET, pet.getId(), memberId);
         List<Image> images = imageRepository.findAll();
         List<Pet> pets = petRepository.findAll();
-        System.out.println("newFileName = " + newFileName);
-        System.out.println("images.get(0) = " + images.get(0));
-        System.out.println("pets.get(0) = " + pets.get(0));
 
         // then
         assertThat(images).hasSize(1);
