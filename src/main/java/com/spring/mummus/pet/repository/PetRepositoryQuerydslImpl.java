@@ -2,7 +2,10 @@ package com.spring.mummus.pet.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
+import com.spring.mummus.pet.dto.QGetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
+import com.spring.mummus.pet.enums.Gender;
+import com.spring.mummus.pet.enums.PetType;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -74,6 +77,53 @@ public class PetRepositoryQuerydslImpl implements PetRepositoryQuerydsl {
                 .where(follow.followingPetId.eq(petId))
                 .fetch();
     }
+
+
+    @Override
+    public void modifyPetName(Long petId, String name) {
+        queryFactory
+                .update(pet)
+                .set(pet.name, name)
+                .where(pet.id.eq(petId))
+                .execute();
+    }
+
+    @Override
+    public void modifyPetAge(Long petId, int age) {
+        queryFactory
+                .update(pet)
+                .set(pet.age, age)
+                .where(pet.id.eq(petId))
+                .execute();
+    }
+
+    @Override
+    public void modifyPetBirth(Long petId, String birth) {
+        queryFactory
+                .update(pet)
+                .set(pet.birth, birth)
+                .where(pet.id.eq(petId))
+                .execute();
+    }
+
+    @Override
+    public void modifyPetGender(Long petId, Gender gender) {
+        queryFactory
+                .update(pet)
+                .set(pet.gender, gender)
+                .where(pet.id.eq(petId))
+                .execute();
+    }
+
+    @Override
+    public void modifyPetType(Long petId, PetType petType) {
+        queryFactory
+                .update(pet)
+                .set(pet.petType, petType)
+                .where(pet.id.eq(petId))
+                .execute();
+    }
+
 
     @Override
     public void deletePet(Long petId) {

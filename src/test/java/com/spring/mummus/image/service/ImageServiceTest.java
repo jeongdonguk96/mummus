@@ -2,7 +2,7 @@ package com.spring.mummus.image.service;
 
 import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.fixture.PetFixture;
-import com.spring.mummus.image.dto.DeleteImageRequest;
+import com.spring.mummus.pet.dto.DeletePetProfileImageRequest;
 import com.spring.mummus.image.entity.Image;
 import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.pet.dto.CreatePetRequest;
@@ -77,7 +77,7 @@ class ImageServiceTest extends AbstractTest {
         MultipartFile file = new MockMultipartFile("file", new byte[1]);
         ImageDomain domain = ImageDomain.PET;
         String fileName = imageService.createImage(file, domain, memberId);
-        DeleteImageRequest request = new DeleteImageRequest(fileName);
+        DeletePetProfileImageRequest request = new DeletePetProfileImageRequest(fileName);
         Pet pet = savePet(1L, memberId, "Bona", fileName);
         imageService.modifyDomainId(pet);
 
