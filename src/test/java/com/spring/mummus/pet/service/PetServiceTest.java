@@ -4,7 +4,6 @@ import com.spring.mummus.common.AbstractTest;
 import com.spring.mummus.exception.enums.PetErrorCode;
 import com.spring.mummus.exception.exception.PetException;
 import com.spring.mummus.fixture.PetFixture;
-import com.spring.mummus.image.enums.ImageDomain;
 import com.spring.mummus.pet.dto.CreatePetRequest;
 import com.spring.mummus.pet.dto.GetMyPetsResponse;
 import com.spring.mummus.pet.entity.Pet;
@@ -30,7 +29,7 @@ class PetServiceTest extends AbstractTest {
         // given
         Long memberId = 1L;
         MultipartFile file = new MockMultipartFile("file", new byte[1]);
-        String profileImageUrl = imageService.createImage(file, ImageDomain.PET, memberId);
+        String profileImageUrl = petService.createPetProfileImage(file, memberId);
         CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
 
         // when
@@ -70,9 +69,9 @@ class PetServiceTest extends AbstractTest {
         //given
         Long memberId = 1L;
         MultipartFile file = new MockMultipartFile("file", new byte[1]);
-        String profileImageUrl = imageService.createImage(file, ImageDomain.PET, memberId);
+        String profileImageUrl = petService.createPetProfileImage(file, memberId);
         CreatePetRequest request = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
-        imageService.createImage(file, ImageDomain.PET, memberId);
+        petService.createPetProfileImage(file, memberId);
 
         //when
         petService.createPet(request, memberId);
@@ -93,10 +92,10 @@ class PetServiceTest extends AbstractTest {
         //given
         Long memberId = 1L;
         MultipartFile file = new MockMultipartFile("file", new byte[1]);
-        String profileImageUrl = imageService.createImage(file, ImageDomain.PET, memberId);
+        String profileImageUrl = petService.createPetProfileImage(file, memberId);
         CreatePetRequest request1 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
         CreatePetRequest request2 = new CreatePetRequest("bona", 4, "2020-08-01", FEMALE, JINDO_DOG, profileImageUrl);
-        imageService.createImage(file, ImageDomain.PET, memberId);
+        petService.createPetProfileImage(file, memberId);
 
         //when
         petService.createPet(request1, memberId);
