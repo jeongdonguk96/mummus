@@ -1,7 +1,7 @@
 package com.spring.mummus.member.service;
 
-import com.spring.mummus.exception.enums.MemberErrorCode;
-import com.spring.mummus.exception.exception.MemberException;
+import com.spring.mummus.exception.code.MemberErrorCode;
+import com.spring.mummus.exception.exception.CommonException;
 import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.entity.Member;
 import com.spring.mummus.member.repository.MemberRepository;
@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.spring.mummus.exception.enums.MemberErrorCode.DUPLICATED_EMAIL;
-import static com.spring.mummus.exception.enums.MemberErrorCode.DUPLICATED_PHONE_NUMBER;
+import static com.spring.mummus.exception.code.MemberErrorCode.DUPLICATED_EMAIL;
+import static com.spring.mummus.exception.code.MemberErrorCode.DUPLICATED_PHONE_NUMBER;
 
 @Service
 @RequiredArgsConstructor
@@ -42,14 +42,14 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(
-                ()-> new MemberException(MemberErrorCode.USER_NOT_FOUND));
+                ()-> new CommonException(MemberErrorCode.USER_NOT_FOUND));
     }
 
 
     // 중복된 이메일이 있는지 확인한다.
     private void checkDuplicatedEmail(String email) {
         if (memberRepository.existsByEmail(email)) {
-            throw new MemberException(DUPLICATED_EMAIL);
+            throw new CommonException(DUPLICATED_EMAIL);
         }
     }
 
@@ -57,7 +57,7 @@ public class MemberService {
     // 중복된 전화번호가 있는지 확인한다.
     private void checkDuplicatedPhoneNumber(String phoneNumber) {
         if (memberRepository.existsByPhoneNumber(phoneNumber)) {
-            throw new MemberException(DUPLICATED_PHONE_NUMBER);
+            throw new CommonException(DUPLICATED_PHONE_NUMBER);
         }
     }
 }

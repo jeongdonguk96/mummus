@@ -1,8 +1,8 @@
 package com.spring.mummus.pet.service;
 
 import com.spring.mummus.common.AbstractTest;
-import com.spring.mummus.exception.enums.PetErrorCode;
-import com.spring.mummus.exception.exception.PetException;
+import com.spring.mummus.exception.code.PetErrorCode;
+import com.spring.mummus.exception.exception.CommonException;
 import com.spring.mummus.fixture.PetFixture;
 import com.spring.mummus.image.entity.Image;
 import com.spring.mummus.pet.dto.CreatePetRequest;
@@ -288,7 +288,7 @@ class PetServiceTest extends AbstractTest {
 
         //when
         petService.createPet(request1, memberId);
-        PetException petException = Assertions.assertThrows(PetException.class, () -> petService.createPet(request2, memberId));
+        CommonException petException = Assertions.assertThrows(CommonException.class, () -> petService.createPet(request2, memberId));
 
 
         //then
