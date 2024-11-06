@@ -1,6 +1,6 @@
 package com.spring.mummus.search.entity;
 
-import com.spring.mummus.common.BaseEntity;
+import com.spring.mummus.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

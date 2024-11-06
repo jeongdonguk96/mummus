@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoggingAspect {
 
+    private static final String TRX_NO = "trxNo";
+
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
     public void restController(){}
 
@@ -27,7 +29,7 @@ public class LoggingAspect {
         String trxNo = LogUtils.generateTrxNo();
 
         // MDC: 스레드-세이프한 로깅 컨텍스트
-        MDC.put("trxNo", trxNo);
+        MDC.put(TRX_NO, trxNo);
         log.info("[{}] ========== {} START ==========", trxNo, apiName);
     }
 
@@ -35,12 +37,12 @@ public class LoggingAspect {
     @After("restController()")
     public void AfterAPI(JoinPoint joinPoint) {
         String apiName = joinPoint.getSignature().getName();
-        String trxNo = MDC.get("trxNo");
+        String trxNo = MDC.get(TRX_NO);
 
         log.info("[{}] ========== {} END ==========", trxNo, apiName);
         log.info("");
 
-        MDC.remove("trxNo");
+        MDC.remove(TRX_NO);
     }
 
 }

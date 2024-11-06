@@ -1,4 +1,4 @@
-package com.spring.mummus.common;
+package com.spring.mummus.common.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

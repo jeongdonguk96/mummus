@@ -1,5 +1,6 @@
 package com.spring.mummus.search.controller;
 
+import com.spring.mummus.common.dto.CommonResult;
 import com.spring.mummus.search.dto.SearchRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,6 +17,6 @@ public interface SearchControllerDocs {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "404", description = "Not Found")
     })
-    public void searchPet(SearchRequest request);
+    public CommonResult searchPet(SearchRequest request);
 
 }
