@@ -114,9 +114,7 @@ public class PetController implements PetControllerDocs {
 
     // 강아지의 프로필 사진을 등록한다.
     @PostMapping(value = "/profile-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CommonResult createPetProfileImage(
-            @RequestPart(name = "file") MultipartFile file
-    ) throws IOException {
+    public CommonResult createPetProfileImage(@RequestPart(name = "file") MultipartFile file) throws IOException {
         Long memberId = 1L;
         return responseService.getSingleResult(petService.createPetProfileImage(file, memberId));
     }

@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Builder
-public class MemberExceptionResponse {
+public class ErrorResponse {
+    private int code;
+    private String message;
     private HttpStatus httpStatus;
-    private Integer errorCode;
-    private String errorMessage;
 }

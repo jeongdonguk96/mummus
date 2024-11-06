@@ -1,8 +1,8 @@
 package com.spring.mummus.member.service;
 
 import com.spring.mummus.common.AbstractTest;
-import com.spring.mummus.exception.enums.MemberErrorCode;
-import com.spring.mummus.exception.exception.MemberException;
+import com.spring.mummus.exception.code.MemberErrorCode;
+import com.spring.mummus.exception.exception.CommonException;
 import com.spring.mummus.member.dto.MemberSignUpRequest;
 import com.spring.mummus.member.entity.Member;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +42,7 @@ class MemberServiceTest extends AbstractTest {
 
         //when
         memberService.signUp(request1);
-        MemberException memberException = assertThrows(MemberException.class, () -> memberService.signUp(request2));
+        CommonException memberException = assertThrows(CommonException.class, () -> memberService.signUp(request2));
 
         //then
         assertEquals(MemberErrorCode.DUPLICATED_EMAIL, memberException.getErrorCode());
@@ -58,7 +58,7 @@ class MemberServiceTest extends AbstractTest {
 
         //when
         memberService.signUp(request1);
-        MemberException memberException = assertThrows(MemberException.class, () -> memberService.signUp(request2));
+        CommonException memberException = assertThrows(CommonException.class, () -> memberService.signUp(request2));
 
         //then
         assertEquals(MemberErrorCode.DUPLICATED_PHONE_NUMBER, memberException.getErrorCode());
