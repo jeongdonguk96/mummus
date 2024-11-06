@@ -11,6 +11,7 @@ public class ImageRepositoryQuerydslImpl implements ImageRepositoryQuerydsl {
 
     private final JPAQueryFactory queryFactory;
 
+
     @Override
     public Image getImage(String path) {
         return queryFactory
@@ -19,12 +20,23 @@ public class ImageRepositoryQuerydslImpl implements ImageRepositoryQuerydsl {
                 .fetchFirst();
     }
 
+
     @Override
     public void deleteImage(String path, Long petId) {
         queryFactory
                 .delete(image)
                 .where(image.domainId.eq(petId)
                         .and(image.path.eq(path)))
+                .execute();
+    }
+
+
+    @Override
+    public void rollbackImage(String path) {
+        queryFactory
+                .delete(image)
+                .where(image.path.eq(path)
+                        .and(image.domainId.isNull()))
                 .execute();
     }
 

@@ -25,6 +25,7 @@ public enum PetType {
     SHIHTZU("시츄"),
     SHIVA_INU("시바"),
     WELSH_CORGI("웰시 코기"),
+    OTHER("기타")
     ;
 
     private final String petType;
