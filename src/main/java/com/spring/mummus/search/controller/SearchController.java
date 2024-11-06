@@ -1,5 +1,7 @@
 package com.spring.mummus.search.controller;
 
+import com.spring.mummus.common.dto.CommonResult;
+import com.spring.mummus.common.service.ResponseService;
 import com.spring.mummus.search.dto.SearchRequest;
 import com.spring.mummus.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController implements SearchControllerDocs {
 
     private final SearchService searchService;
+    private final ResponseService responseService;
 
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 다른 강아지를 검색한다.
     @GetMapping("/search")
-    public void searchPet(SearchRequest request) {
+    public CommonResult searchPet(SearchRequest request) {
         Long memberId = 1L;
-
-        searchService.searchPet(request, memberId);
+        return responseService.getSingleResult(searchService.searchPet(request, memberId));
     }
 
 }

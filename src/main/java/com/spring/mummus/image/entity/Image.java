@@ -1,6 +1,6 @@
 package com.spring.mummus.image.entity;
 
-import com.spring.mummus.common.BaseEntity;
+import com.spring.mummus.common.entity.BaseEntity;
 import com.spring.mummus.image.enums.ImageDomain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

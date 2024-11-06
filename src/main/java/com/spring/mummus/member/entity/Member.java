@@ -1,6 +1,6 @@
 package com.spring.mummus.member.entity;
 
-import com.spring.mummus.common.BaseEntity;
+import com.spring.mummus.common.entity.BaseEntity;
 import com.spring.mummus.member.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

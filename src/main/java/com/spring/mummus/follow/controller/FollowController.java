@@ -1,5 +1,7 @@
 package com.spring.mummus.follow.controller;
 
+import com.spring.mummus.common.dto.CommonResult;
+import com.spring.mummus.common.service.ResponseService;
 import com.spring.mummus.follow.dto.FollowPetRequest;
 import com.spring.mummus.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
@@ -17,55 +19,58 @@ import org.springframework.web.bind.annotation.RestController;
 public class FollowController implements FollowControllerDocs {
 
     private final FollowService followService;
+    private final ResponseService responseService;
 
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 다른 강아지를 팔로우한다.
     @PostMapping()
-    public void followPet(@RequestBody FollowPetRequest request) {
+    public CommonResult followPet(@RequestBody FollowPetRequest request) {
         Long memberId = 1L;
         followService.followPet(request, memberId);
+        return responseService.getSuccessResult();
     }
 
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 다른 강아지를 언팔로우한다.
     @DeleteMapping()
-    public void unfollowPet(@RequestBody FollowPetRequest request) {
+    public CommonResult unfollowPet(@RequestBody FollowPetRequest request) {
         Long memberId = 1L;
         followService.unfollowPet(request, memberId);
+        return responseService.getSuccessResult();
     }
 
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 내가 팔로우하는 강아지를 조회한다.
     @GetMapping("/following")
-    public void getFollowingPets() {
+    public CommonResult getFollowingPets() {
         Long memberId = 1L;
-        followService.getFollowingPets(memberId);
+        return responseService.getListResult(followService.getFollowingPets(memberId));
     }
 
 
     // TODO: 추후 시큐리티 컨텍스트에서 id값 꺼내오기
     // 내가 팔로우하는 강아지의 수를 조회한다.
     @GetMapping("/following/count")
-    public void countFollowingPets() {
+    public CommonResult countFollowingPets() {
         Long memberId = 1L;
-        followService.countFollowingPets(memberId);
+        return responseService.getSingleResult(followService.countFollowingPets(memberId));
     }
 
 
     // 내 강아지를 팔로우하는 강아지를 조회한다.
     @GetMapping("/followers/{petId}")
-    public void getFollowerPets(@PathVariable(name = "petId") Long petId) {
-        followService.getFollowerPetsByPet(petId);
+    public CommonResult getFollowerPets(@PathVariable(name = "petId") Long petId) {
+        return responseService.getListResult(followService.getFollowerPetsByPet(petId));
     }
 
 
     // 내 강아지를 팔로우하는 강아지의 수를 조회한다.
     @GetMapping("/followers/{petId}/count")
-    public void countFollowerPets(@PathVariable(name = "petId") Long petId) {
-        followService.countFollowerPets(petId);
+    public CommonResult countFollowerPets(@PathVariable(name = "petId") Long petId) {
+        return responseService.getSingleResult(followService.countFollowerPets(petId));
     }
 
 }
