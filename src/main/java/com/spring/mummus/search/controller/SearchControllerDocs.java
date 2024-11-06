@@ -17,6 +17,6 @@ public interface SearchControllerDocs {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "404", description = "Not Found")
     })
-    public CommonResult searchPet(SearchRequest request);
+    CommonResult searchPet(SearchRequest request);
 
 }
