@@ -29,13 +29,14 @@ import static com.spring.mummus.exception.enums.PetErrorCode.DUPLICATED_PET;
 @RequiredArgsConstructor
 public class PetService {
 
+    @Value("https://${cloud.aws.s3.bucket}.s3.ap-northeast-2.amazonaws.com/")
+    private String S3_URL;
+
+
     private final S3Service s3Service;
     private final ImageService imageService;
     private final PetRepository petRepository;
     private final ImageRepository imageRepository;
-
-    @Value("https://${cloud.aws.s3.bucket}.s3.ap-northeast-2.amazonaws.com/")
-    private String S3_URL;
 
 
     // 강아지를 등록한다.
@@ -49,16 +50,8 @@ public class PetService {
     }
 
 
-    // 다른 강아지를 조회한다.
-    @Transactional
-    public Pet getPet(Long petId) {
-        return petRepository.findById(petId).orElseThrow(
-                () -> new PetException(PetErrorCode.PET_NOT_FOUND));
-    }
-
-
     // 사용자의 강아지를 조회한다.
-    @Transactional
+    @Transactional(readOnly = true)
     public List<GetMyPetsResponse> getMyPets(Long memberId) {
         List<GetMyPetsResponse> myPets = petRepository.findMyPets(memberId);
 
@@ -67,6 +60,14 @@ public class PetService {
         }
 
         return myPets;
+    }
+
+
+    // 다른 강아지를 조회한다.
+    @Transactional(readOnly = true)
+    public Pet findById(Long id) {
+        return petRepository.findById(id).orElseThrow(
+                () -> new PetException(PetErrorCode.PET_NOT_FOUND));
     }
 
 
@@ -86,8 +87,8 @@ public class PetService {
 
     // 강아지의 생일을 변경한다.
     @Transactional
-    public void modifyPetBirth(Long petId, String age) {
-        petRepository.modifyPetBirth(petId, age);
+    public void modifyPetBirth(Long petId, String birth) {
+        petRepository.modifyPetBirth(petId, birth);
     }
 
 
@@ -153,21 +154,22 @@ public class PetService {
         String fileNameForS3 = request.profileImageUrl().replace(S3_URL, "");
         s3Service.delete(fileNameForS3);
         imageRepository.deleteImage(request.profileImageUrl(), petId);
+
+        Pet pet = petRepository.findById(petId).orElseThrow(
+                () -> new PetException(PetErrorCode.PET_NOT_FOUND));
+        pet.modifyProfileImageUrl(null);
     }
 
 
     // 강아지를 삭제한다.
     @Transactional
     public void deletePet(Long petId) {
-        petRepository.deletePet(petId);
-    }
-
-
-    // 강아지 존재 여부를 확인한다.
-    @Transactional(readOnly = true)
-    public Pet findById(Long id) {
-        return petRepository.findById(id).orElseThrow(
+        Pet pet = petRepository.findById(petId).orElseThrow(
                 () -> new PetException(PetErrorCode.PET_NOT_FOUND));
+
+        s3Service.delete(pet.getProfileImageUrl().replace(S3_URL, ""));
+        imageRepository.deleteImage(pet.getProfileImageUrl(), petId);
+        petRepository.deletePet(petId);
     }
 
 

@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 @SpringBootTest
 public abstract class AbstractTest implements InitializingBean {
 
+    private List<String> entities;
+
     @Autowired JdbcTemplate jdbcTemplate;
     @Autowired EntityManager em;
 
@@ -36,13 +38,12 @@ public abstract class AbstractTest implements InitializingBean {
     @Autowired public MemberService memberService;
     @Autowired public FollowService followService;
     @Autowired public SearchService searchService;
+
     @Autowired public PetRepository petRepository;
     @Autowired public ImageRepository imageRepository;
     @Autowired public MemberRepository memberRepository;
     @Autowired public FollowRepository followRepository;
     @Autowired public SearchRepository searchRepository;
-
-    private List<String> entities;
 
 
     @Override

@@ -45,7 +45,7 @@ public class PetController {
     // 다른 강아지를 조회한다.
     @GetMapping("/{petId}")
     public Pet getPet(@PathVariable(name = "petId") Long petId) {
-        return petService.getPet(petId);
+        return petService.findById(petId);
     }
 
 
@@ -131,9 +131,7 @@ public class PetController {
 
     // 임시 등록한 강아지의 프로필 이미지를 삭제한다.
     @DeleteMapping("/profile-image")
-    public void rollbackPetProfileImage(
-            @RequestBody DeletePetProfileImageRequest request
-    ) {
+    public void rollbackPetProfileImage(@RequestBody DeletePetProfileImageRequest request) {
         petService.rollbackPetProfileImage(request);
     }
 
